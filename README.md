@@ -1,1 +1,1 @@
-# free-pBoard
+# freeboard
