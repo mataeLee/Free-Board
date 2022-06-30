@@ -1,0 +1,10 @@
+<body class="sb-nav-fixed" th:fragment="header" xmlns:sec="http://www.w3.org/1999/xhtml">
+<div class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
+    <div class="navbar-brand ps-3">Promptech Free Board</div>
+    <div class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0"></div>
+
+    <div sec:authorize="isAuthenticated()" class="text-white"><span sec:authentication="name"></span>님 반갑습니다.</div>
+    <a sec:authorize="isAnonymous()" class="nav-link" href="/login">Login</a>
+    <a sec:authorize="isAuthenticated()" class="nav-link" href="/logout">Logout</a>
+</div>
+</body>

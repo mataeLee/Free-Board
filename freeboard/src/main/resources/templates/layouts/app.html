@@ -1,0 +1,17 @@
+<html lang="ko"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head th:replace="fragments/header :: header">Header</head>
+<body>
+<div id="layoutSidenav">
+    <div th:replace="fragments/navbar :: navbar" id="layoutSidenav_nav"></div>
+    <div layout:fragment="content" style="padding-top: 24px">Content</div>
+</div>
+<th:block th:replace="fragments/footer :: footer"></th:block>
+<!--Base script, config-->
+<th:block th:replace="fragments/config :: config"></th:block>
+<!--Page Script-->
+<th:block layout:fragment="script"></th:block>
+</body>
+</html>

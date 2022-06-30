@@ -1,0 +1,29 @@
+<div th:fragment="navbar"
+     xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+    <div id="layoutSidenav_nav">
+        <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
+            <div class="sb-sidenav-menu">
+                <div class="nav">
+                    <a class="nav-link" href="/articles/today">
+                        <div class="sb-nav-link-icon">
+                            <i class="fas fa-table"></i>
+                        </div>
+                        Today Articles
+                    </a>
+                    <a class="nav-link" href="/articles">
+                        <div class="sb-nav-link-icon">
+                            <i class="fas fa-table"></i>
+                        </div>
+                        Articles
+                    </a>
+                    <a class="nav-link" href="/user/page" sec:authorize="isAuthenticated()">
+                        <div class="sb-nav-link-icon">
+                            <i class="fas fa-user fa-fw"></i>
+                        </div>
+                        My Page
+                    </a>
+                </div>
+            </div>
+        </nav>
+    </div>
+</div>

@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:layout="http://www.ultraq/net/nz/thymleaf/layout"
+      layout:decorate="~{layouts/app.html}">
+<body>
+<div layout:fragment="content" id="layoutSidenav_content">
+    <h1><span th:text="${articleDetail.title}"></span></h1><br>
+    <div th:utext="${articleDetail.content}"></div>
+</div>
+</body>
+</html>
