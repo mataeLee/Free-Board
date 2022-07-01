@@ -1,5 +1,6 @@
 package co.kr.promptech.freeboard.model;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -28,4 +29,13 @@ public class Comment {
     @ManyToOne(targetEntity = Article.class, fetch = FetchType.LAZY)
     @JoinColumn(name = "article_id")
     private Article article;
+
+    @Builder
+    public Comment(Long id, String content, Instant uptDate, Account user, Article article) {
+        this.id = id;
+        this.content = content;
+        this.uptDate = uptDate;
+        this.user = user;
+        this.article = article;
+    }
 }

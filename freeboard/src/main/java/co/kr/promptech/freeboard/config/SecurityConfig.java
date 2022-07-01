@@ -34,6 +34,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public void configure(HttpSecurity httpSecurity) throws Exception{
         httpSecurity.authorizeRequests()
                 .antMatchers("/articles/new").authenticated()
+                .antMatchers("/accounts/*").authenticated()
                 .antMatchers("/**").permitAll();
         httpSecurity.formLogin()
                 .loginPage("/login")

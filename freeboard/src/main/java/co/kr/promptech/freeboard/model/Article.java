@@ -1,5 +1,6 @@
 package co.kr.promptech.freeboard.model;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -38,4 +39,15 @@ public class Article {
     @ManyToOne(targetEntity = Account.class, fetch = FetchType.LAZY)
     @JoinColumn(name="user_id")
     private Account user;
+
+    @Builder
+    public Article(Long id, String title, String content, int hit, Instant creationDate, Instant upateDate, Account user) {
+        this.id = id;
+        this.title = title;
+        this.content = content;
+        this.hit = hit;
+        this.creationDate = creationDate;
+        this.upateDate = upateDate;
+        this.user = user;
+    }
 }

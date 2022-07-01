@@ -4,6 +4,7 @@ import co.kr.promptech.freeboard.dto.AccountDTO;
 import co.kr.promptech.freeboard.model.Account;
 import co.kr.promptech.freeboard.repository.AccountRepository;
 import groovy.util.logging.Slf4j;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -20,10 +21,10 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 @Slf4j
 public class AccountService implements UserDetailsService {
-    @Autowired
-    private AccountRepository accountRepository;
+    private final AccountRepository accountRepository;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -31,9 +32,11 @@ public class AccountService implements UserDetailsService {
         Account user = memberEntityWrapper.orElse(null);
 
         List<GrantedAuthority> authorities = new ArrayList<>();
-        authorities.add(new SimpleGrantedAuthority("ROLE_USER"));
-
-        return new User(user.getUsername(), user.getPassword(), authorities);
+        if(user != null) {
+            authorities.add(new SimpleGrantedAuthority("ROLE_USER"));
+            return new User(user.getUsername(), user.getPassword(), authorities);
+        }
+        else throw new UsernameNotFoundException("User not found");
     }
 
     @Transactional
@@ -47,10 +50,6 @@ public class AccountService implements UserDetailsService {
                 .build();
 
          return accountRepository.save(user).getId();
-    }
-
-    public Account findById(Long writerId) {
-        return accountRepository.findById(writerId).get();
     }
 
     public Account findAccountByUsername(String username) {

@@ -10,7 +10,7 @@
     <div class="container-fluid px-4">
         <div class="card mb-4">
             <div class="card-header">
-                Today New Articles
+                <span th:text="${tableTitle}"></span>
             </div>
             <div class="card-body">
                 <div class="dataTable-wrapper dataTable-loading no-footer sortable searchable fixed-columns">
@@ -21,19 +21,19 @@
                             <thead>
                             <tr>
                                 <th data-sortable style="width: 5%;">번호</th>
-                                <th data-sortable style="width: 70%;">제목</th>
+                                <th data-sortable style="width: 50%;">제목</th>
                                 <th data-sortable style="width: 5%;">조회수</th>
                                 <th data-sortable style="width: 10%;">작성자</th>
-                                <th data-sortable style="width: 10%;">작성일</th>
+                                <th data-sortable style="width: 15%;">작성일</th>
                             </tr>
                             </thead>
                             <tbody>
-                            <tr th:each="list : ${todayArticles}">
+                            <tr th:each="list : ${articles}">
                                 <td><span th:text="${list.num}"></span></td>
-                                <td><a th:href="@{/article/(articleId=${list.num})}"><span
+                                <td><a th:href="@{/articles/{id}(id = ${list.num})}"><span
                                         th:text="${list.title}"></span></a></td>
                                 <td><span th:text="${list.hit}"></span></td>
-                                <td><span th:text="${list.writer}"></span></td>
+                                <td><span th:text="${list.username}"></span></td>
                                 <td><span th:text="${list.creationDate}"></span></td>
                             </tr>
                             </tbody>
@@ -44,7 +44,7 @@
                 </div>
             </div>
         </div>
-        <form action="/user/article/new" method="get">
+        <form th:action="@{/articles/new}" method="get">
             <button class="btn btn-primary" type="submit">글쓰기</button>
         </form>
     </div>

@@ -4,19 +4,19 @@
         <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
             <div class="sb-sidenav-menu">
                 <div class="nav">
-                    <a class="nav-link" href="/articles/today">
+                    <a class="nav-link" th:href="@{/articles/news}">
                         <div class="sb-nav-link-icon">
                             <i class="fas fa-table"></i>
                         </div>
                         Today Articles
                     </a>
-                    <a class="nav-link" href="/articles">
+                    <a class="nav-link" th:href="@{/articles}">
                         <div class="sb-nav-link-icon">
                             <i class="fas fa-table"></i>
                         </div>
                         Articles
                     </a>
-                    <a class="nav-link" href="/user/page" sec:authorize="isAuthenticated()">
+                    <a class="nav-link" th:href="@{/accounts}" sec:authorize="isAuthenticated()">
                         <div class="sb-nav-link-icon">
                             <i class="fas fa-user fa-fw"></i>
                         </div>

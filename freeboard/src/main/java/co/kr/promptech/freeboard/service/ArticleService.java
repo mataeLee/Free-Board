@@ -4,17 +4,20 @@ import co.kr.promptech.freeboard.dto.ArticleDetailDTO;
 import co.kr.promptech.freeboard.dto.ArticleSummaryDTO;
 import co.kr.promptech.freeboard.model.Article;
 import co.kr.promptech.freeboard.repository.ArticleRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class ArticleService {
-    @Autowired
-    private ArticleRepository articleRepository;
+    private final ArticleRepository articleRepository;
 
     public void save(Article article){
         articleRepository.save(article);
@@ -24,29 +27,28 @@ public class ArticleService {
         articleRepository.addHitByArticleId(articleId);
     }
 
-    public List<ArticleSummaryDTO> findTodays() {
-        List<Article> articles = articleRepository.findAllByCreatedToday();
+    public List<ArticleSummaryDTO> findAllByNews() {
+        List<Article> articles = articleRepository.findAllByCreationDateBetweenOrderByCreationDateDesc(Instant.now().minus(1, ChronoUnit.DAYS), Instant.now());
         List<ArticleSummaryDTO> res = new ArrayList<>();
 
-        for(int i=0; i<articles.size(); i++){
-            Article article = articles.get(articles.size()-1-i);
+        for(Article article: articles){
             res.add(ArticleSummaryDTO
                     .builder()
                     .num(article.getId())
                     .title(article.getTitle())
                     .username(article.getUser().getUsername())
                     .hit(article.getHit())
+                    .creationDate(article.getCreationDate())
                     .build());
         }
         return res;
     }
 
-    public List<ArticleSummaryDTO> findAllArticles() {
-        Iterator<Article> iterator = articleRepository.findAll().iterator();
+    public List<ArticleSummaryDTO> findAllByRecentPosts() {
+        List<Article> articles = articleRepository.findAllByOrderByCreationDateDesc();
         List<ArticleSummaryDTO> res = new ArrayList<>();
 
-        while (iterator.hasNext()){
-            Article article = iterator.next();
+        for(Article article: articles){
             res.add(ArticleSummaryDTO
                     .builder()
                     .num(article.getId())

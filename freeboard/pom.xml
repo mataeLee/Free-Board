@@ -61,6 +61,12 @@
             <artifactId>mysql-connector-java</artifactId>
             <version>8.0.25</version>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/de.agilecoders.wicket/wicket-bootstrap-core -->
+        <dependency>
+            <groupId>de.agilecoders.wicket</groupId>
+            <artifactId>wicket-bootstrap-core</artifactId>
+            <version>5.0.3</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -68,6 +74,7 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <version>${parent.version}</version>
                 <configuration>
                     <excludes>
                         <exclude>

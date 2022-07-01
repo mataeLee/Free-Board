@@ -5,7 +5,7 @@ import co.kr.promptech.freeboard.dto.ArticleSummaryDTO;
 import co.kr.promptech.freeboard.model.Article;
 import co.kr.promptech.freeboard.service.ArticleService;
 import co.kr.promptech.freeboard.service.AccountService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -14,42 +14,29 @@ import java.security.Principal;
 import java.util.List;
 
 @Controller
+@RequestMapping("/articles")
+@RequiredArgsConstructor
 public class ArticleController {
+    private final ArticleService articleService;
+    private final AccountService accountService;
 
-    @Autowired
-    private ArticleService articleService;
-
-    @Autowired
-    private AccountService accountService;
-
-    @GetMapping("/articles/new")
-    public String postForm(){
-        return "pages/article/new";
-    }
-
-    @GetMapping("/articles/{id}")
-    public String show(@PathVariable("id") Long id, Model model){
-        ArticleDetailDTO articleDetailDTO = articleService.findArticleDetailDTOById(id);
-        articleService.addHit(id);
-        model.addAttribute("articleDetail", articleDetailDTO);
-        return "pages/article/show";
-    }
-
-    @GetMapping("/articles/today")
-    public String todayIndex(Model model){
-        List<ArticleSummaryDTO> articles = articleService.findTodays();
-        model.addAttribute("todayArticles", articles);
-        return "pages/article/index";
-    }
-
-    @GetMapping("/articles")
+    @GetMapping()
     public String index(Model model){
-        List<ArticleSummaryDTO> articles = articleService.findAllArticles();
-        model.addAttribute("todayArticles", articles);
-        return "pages/article/index";
+        List<ArticleSummaryDTO> articles = articleService.findAllByRecentPosts();
+        model.addAttribute("articles", articles);
+        model.addAttribute("tableTitle", "Articles");
+        return "pages/index";
     }
 
-    @PostMapping("/articles")
+    @GetMapping("/news")
+    public String indexNews(Model model){
+        List<ArticleSummaryDTO> articles = articleService.findAllByNews();
+        model.addAttribute("articles", articles);
+        model.addAttribute("tableTitle", "Articles News");
+        return "pages/index";
+    }
+
+    @PostMapping()
     //TODO VO 객체 사용
     public String post(String subject, String content, Principal principal){
         Article article = new Article();
@@ -58,5 +45,18 @@ public class ArticleController {
         article.setTitle(subject);
         articleService.save(article);
         return "redirect:/articles";
+    }
+
+    @GetMapping("/new")
+    public String postForm(){
+        return "pages/articles/new";
+    }
+
+    @GetMapping("/{id}")
+    public String show(@PathVariable("id") Long id, Model model){
+        ArticleDetailDTO articleDetailDTO = articleService.findArticleDetailDTOById(id);
+        articleService.addHit(id);
+        model.addAttribute("articleDetail", articleDetailDTO);
+        return "pages/articles/show";
     }
 }
