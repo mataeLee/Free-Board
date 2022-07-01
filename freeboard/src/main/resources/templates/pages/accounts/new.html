@@ -6,7 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
     <meta name="description" content=""/>
     <meta name="author" content=""/>
-    <title>Register - SB Admin</title>
     <link href="css/styles.css" rel="stylesheet"/>
     <script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
 </head>
@@ -21,23 +20,27 @@
                             <div class="card-header"><h3 class="text-center font-weight-light my-4">Create Account</h3>
                             </div>
                             <div class="card-body">
-                                <form th:action="@{/signup}" method="post">
+                                <form th:action="@{/signup}" method="post" th:object="${accountDTO}">
+<!--                                    <div th:if="${param.error}"><p th:text="${exception}" class="alert alert-danger"></p></div>-->
                                     <div class="form-floating mb-3">
-                                        <input class="form-control" id="username" name="username" type="text"
+                                        <input class="form-control" name="username" id="username"type="text" th:field="*{username}"
                                                placeholder="Account"/>
                                         <label for="username">Account</label>
+                                        <div th:if="${#fields.hasErrors('username')}" th:errors="*{username}" style="color:red">Account error</div>
                                     </div>
                                     <div class="form-floating mb-3">
-                                        <input class="form-control" id="email" name="email" type="email"
+                                        <input class="form-control" id="email" name="email" type="email" th:field="*{email}"
                                                placeholder="name@example.com"/>
                                         <label for="email">Email address</label>
+                                        <div th:if="${#fields.hasErrors('email')}" th:errors="*{email}" style="color:red">Email error</div>
                                     </div>
                                     <div class="row mb-3">
                                         <div class="col-md-6">
                                             <div class="form-floating mb-3 mb-md-0">
-                                                <input class="form-control" id="password" name="password"
-                                                       type="password" placeholder="Create a password"/>
+                                                <input class="form-control" id="password" name="password" th:field="*{password}"
+                                                       type="password" placeholder="Password"/>
                                                 <label for="password">Password</label>
+                                                <div th:if="${#fields.hasErrors('password')}" th:errors="*{password}" style="color:red">Password error</div>
                                             </div>
                                         </div>
                                     </div>
