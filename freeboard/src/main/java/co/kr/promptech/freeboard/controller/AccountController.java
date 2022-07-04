@@ -1,10 +1,13 @@
 package co.kr.promptech.freeboard.controller;
 
 import co.kr.promptech.freeboard.dto.AccountDTO;
+import co.kr.promptech.freeboard.dto.ArticleSummaryDTO;
 import co.kr.promptech.freeboard.model.Account;
+import co.kr.promptech.freeboard.model.Article;
 import co.kr.promptech.freeboard.service.AccountService;
+import co.kr.promptech.freeboard.service.ArticleService;
+import co.kr.promptech.freeboard.service.CommentService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -13,10 +16,17 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import java.security.Principal;
+import java.util.List;
+
 @Controller
 @RequiredArgsConstructor
 public class AccountController {
     private final AccountService accountService;
+
+    private final ArticleService articleService;
+
+    private final CommentService commentService;
 
     @GetMapping("/login")
     public String login(){
@@ -43,9 +53,11 @@ public class AccountController {
     }
 
     @GetMapping("/accounts")
-    public String show(Model model, Authentication authentication){
-        String username = authentication.getName();
+    public String show(Model model, Principal principal){
+        Account account = accountService.findAccountByUsername(principal.getName());
+        List<ArticleSummaryDTO> articles = articleService.findAllByUser(account);
 
+        model.addAttribute("articles", articles);
         return "pages/accounts/show";
     }
 }

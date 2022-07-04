@@ -2,9 +2,7 @@ package co.kr.promptech.freeboard.controller;
 
 import co.kr.promptech.freeboard.dto.ArticleDetailDTO;
 import co.kr.promptech.freeboard.dto.ArticleSummaryDTO;
-import co.kr.promptech.freeboard.model.Article;
 import co.kr.promptech.freeboard.service.ArticleService;
-import co.kr.promptech.freeboard.service.AccountService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,7 +16,6 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ArticleController {
     private final ArticleService articleService;
-    private final AccountService accountService;
 
     @GetMapping()
     public String index(Model model){
@@ -37,18 +34,15 @@ public class ArticleController {
     }
 
     @PostMapping()
-    //TODO VO 객체 사용
-    public String post(String subject, String content, Principal principal){
-        Article article = new Article();
-        article.setUser(accountService.findAccountByUsername(principal.getName()));
-        article.setContent(content);
-        article.setTitle(subject);
-        articleService.save(article);
+    public String post(ArticleDetailDTO articleDetailDTO, Principal principal){
+        articleDetailDTO.setUsername(principal.getName());
+        articleService.save(articleDetailDTO);
         return "redirect:/articles/news";
     }
 
     @GetMapping("/new")
-    public String postForm(){
+    public String postForm(Model model){
+        model.addAttribute("articleDetail", new ArticleDetailDTO());
         return "pages/articles/new";
     }
 
@@ -58,5 +52,24 @@ public class ArticleController {
         articleService.addHit(id);
         model.addAttribute("articleDetail", articleDetailDTO);
         return "pages/articles/show";
+    }
+
+    @DeleteMapping("/{id}")
+    public String delete(@PathVariable Long id){
+        articleService.delete(id);
+        return "redirect:/accounts";
+    }
+
+    @GetMapping("/put/{id}")
+    public String updateForm(@PathVariable Long id, Model model){
+        ArticleDetailDTO articleDetailDTO = articleService.findArticleDetailDTOById(id);
+        model.addAttribute("articleDetail", articleDetailDTO);
+        return "pages/articles/put";
+    }
+
+    @PutMapping()
+    public String update(ArticleDetailDTO articleDetail){
+        articleService.save(articleDetail);
+        return "redirect:/accounts";
     }
 }

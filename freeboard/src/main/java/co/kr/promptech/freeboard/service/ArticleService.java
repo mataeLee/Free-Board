@@ -2,6 +2,7 @@ package co.kr.promptech.freeboard.service;
 
 import co.kr.promptech.freeboard.dto.ArticleDetailDTO;
 import co.kr.promptech.freeboard.dto.ArticleSummaryDTO;
+import co.kr.promptech.freeboard.model.Account;
 import co.kr.promptech.freeboard.model.Article;
 import co.kr.promptech.freeboard.repository.ArticleRepository;
 import co.kr.promptech.freeboard.util.InstantFormatter;
@@ -20,7 +21,26 @@ import java.util.List;
 public class ArticleService {
     private final ArticleRepository articleRepository;
 
+    private final AccountService accountService;
+
     public void save(Article article){
+        articleRepository.save(article);
+    }
+
+    public void save(ArticleDetailDTO articleDetail) {
+        Article article = articleRepository.findById(articleDetail.getNum()).get();
+        if(article == null) {
+            Account user = accountService.findAccountByUsername(articleDetail.getUsername());
+            article = Article.builder()
+                    .content(articleDetail.getContent())
+                    .title(articleDetail.getTitle())
+                    .user(user)
+                    .build();
+        }
+        else{
+            article.setTitle(articleDetail.getTitle());
+            article.setContent(articleDetail.getContent());
+        }
         articleRepository.save(article);
     }
 
@@ -72,5 +92,27 @@ public class ArticleService {
                 .hit(article.getHit())
                 .creationDate(InstantFormatter.formatString(article.getCreationDate()))
                 .build();
+    }
+
+    public List<ArticleSummaryDTO> findAllByUser(Account user){
+        List<Article> articles = articleRepository.findAllByUser(user);
+        List<ArticleSummaryDTO> res = new ArrayList<>();
+
+        for(Article article: articles){
+            res.add(ArticleSummaryDTO
+                    .builder()
+                    .num(article.getId())
+                    .title(article.getTitle())
+                    .username(article.getUser().getUsername())
+                    .hit(article.getHit())
+                    .creationDate(InstantFormatter.formatString(article.getCreationDate()))
+                    .build());
+        }
+        return res;
+    }
+
+    public void delete(Long id) {
+        Article article = articleRepository.findById(id).get();
+        articleRepository.delete(article);
     }
 }

@@ -6,14 +6,17 @@
 <body>
 <div layout:fragment="content" id="layoutSidenav_content">
     <div class="card-body">
-        <form th:action="@{/articles}" method="post" th:object="${articleDetail}">
+        <form th:action="@{/articles}" th:method="put" th:object="${articleDetail}">
+            <input type="hidden" name="_method" value="put">
+            <input type="hidden" th:field="*{num}"></th:field>
             <div class="form-floating mb-3">
-                <input th:field="*{title}" class="form-control" id="title" type="text" name="title" placeholder="Account"/>
+                <input th:field="*{title}" class="form-control" id="title" placeholder="Account">
                 <label for="title">title</label>
             </div>
-            <textarea th:field="*{content}" id="summernote" type="text" name="content" rows="10"></textarea>
+            <textarea th:field="*{content}" id="summernote" type="text" name="content" rows="10">
+            </textarea>
             <button class="btn btn-primary" type="submit">완료</button>
-            <a class="btn btn-primary" href="/">취소</a>
+            <a class="btn btn-primary" href="/accounts">취소</a>
         </form>
     </div>
 </div>

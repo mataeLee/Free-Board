@@ -4,8 +4,22 @@
       layout:decorate="~{layouts/app.html}">
 <body>
 <div layout:fragment="content" id="layoutSidenav_content">
-    <span th:text="${articleDetail.title}"></span>
-    <div th:utext="${articleDetail.content}"></div>
+    <div class="container-fluid px-4">
+        <div class="card mb-4">
+            <div class="card-header">
+                <span th:text="${articleDetail.title}"></span><br>
+            </div>
+            <div class="card-body">
+                <div class="tab-content">
+                    <th:block>작성자 : <span th:text="${articleDetail.username}"></span></th:block><br>
+                    <th:block>작성일 : <span th:text="${articleDetail.creationDate}"></span></th:block>
+<!--                마지막 수정일 : <span th:text="${articleDetail.updateDate}"></span>-->
+                </div>
+                <hr class="one">
+                <div th:utext="${articleDetail.content}"></div>
+            </div>
+        </div>
+    </div>
 </div>
 </body>
 </html>

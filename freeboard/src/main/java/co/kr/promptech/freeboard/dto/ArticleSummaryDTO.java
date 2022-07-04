@@ -2,11 +2,13 @@ package co.kr.promptech.freeboard.dto;
 
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import java.time.Instant;
 
 @Getter
 @Setter
+@NoArgsConstructor
 public class ArticleSummaryDTO {
     private Long num;
     private String title;
