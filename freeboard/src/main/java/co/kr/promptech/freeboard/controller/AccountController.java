@@ -2,6 +2,7 @@ package co.kr.promptech.freeboard.controller;
 
 import co.kr.promptech.freeboard.dto.AccountDTO;
 import co.kr.promptech.freeboard.dto.ArticleSummaryDTO;
+import co.kr.promptech.freeboard.dto.CommentDTO;
 import co.kr.promptech.freeboard.model.Account;
 import co.kr.promptech.freeboard.model.Article;
 import co.kr.promptech.freeboard.service.AccountService;
@@ -55,9 +56,26 @@ public class AccountController {
     @GetMapping("/accounts")
     public String show(Model model, Principal principal){
         Account account = accountService.findAccountByUsername(principal.getName());
-        List<ArticleSummaryDTO> articles = articleService.findAllByUser(account);
-
+        List<ArticleSummaryDTO> articles = articleService.findAllByAccount(account);
+        List<CommentDTO> comments = commentService.findByAccount(account);
         model.addAttribute("articles", articles);
+        model.addAttribute("comments", comments);
         return "pages/accounts/show";
+    }
+
+    @GetMapping("/accounts/articles")
+    public String showArticles(Model model, Principal principal){
+        Account account = accountService.findAccountByUsername(principal.getName());
+        List<ArticleSummaryDTO> articles = articleService.findAllByAccount(account);
+        model.addAttribute("articles", articles);
+        return "pages/accounts/articles";
+    }
+
+    @GetMapping("/accounts/comments")
+    public String showComments(Model model, Principal principal){
+        Account account = accountService.findAccountByUsername(principal.getName());
+        List<CommentDTO> comments = commentService.findByAccount(account);
+        model.addAttribute("comments", comments);
+        return "pages/accounts/comments";
     }
 }

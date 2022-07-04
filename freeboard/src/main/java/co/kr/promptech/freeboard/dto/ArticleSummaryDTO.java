@@ -10,15 +10,15 @@ import java.time.Instant;
 @Setter
 @NoArgsConstructor
 public class ArticleSummaryDTO {
-    private Long num;
+    private Long id;
     private String title;
     private String username;
     private int hit;
     private String creationDate;
 
     @Builder
-    public ArticleSummaryDTO(Long num, String title, String username, int hit, String creationDate){
-        this.num = num;
+    public ArticleSummaryDTO(Long id, String title, String username, int hit, String creationDate){
+        this.id = id;
         this.title = title;
         this.username = username;
         this.hit = hit;

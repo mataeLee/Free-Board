@@ -2,7 +2,9 @@ package co.kr.promptech.freeboard.controller;
 
 import co.kr.promptech.freeboard.dto.ArticleDetailDTO;
 import co.kr.promptech.freeboard.dto.ArticleSummaryDTO;
+import co.kr.promptech.freeboard.dto.CommentDTO;
 import co.kr.promptech.freeboard.service.ArticleService;
+import co.kr.promptech.freeboard.service.CommentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,6 +18,8 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ArticleController {
     private final ArticleService articleService;
+
+    private final CommentService commentService;
 
     @GetMapping()
     public String index(Model model){
@@ -50,14 +54,17 @@ public class ArticleController {
     public String show(@PathVariable("id") Long id, Model model){
         ArticleDetailDTO articleDetailDTO = articleService.findArticleDetailDTOById(id);
         articleService.addHit(id);
+        List<CommentDTO> comments = commentService.findByArticle(articleDetailDTO.getId());
+        articleDetailDTO.setComments(comments);
         model.addAttribute("articleDetail", articleDetailDTO);
+        model.addAttribute("comment", new CommentDTO());
         return "pages/articles/show";
     }
 
     @DeleteMapping("/{id}")
     public String delete(@PathVariable Long id){
         articleService.delete(id);
-        return "redirect:/accounts";
+        return "redirect:/accounts/articles";
     }
 
     @GetMapping("/put/{id}")

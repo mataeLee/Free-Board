@@ -8,7 +8,7 @@
     <div class="card-body">
         <form th:action="@{/articles}" th:method="put" th:object="${articleDetail}">
             <input type="hidden" name="_method" value="put">
-            <input type="hidden" th:field="*{num}"></th:field>
+            <input type="hidden" th:field="*{id}"></th:field>
             <div class="form-floating mb-3">
                 <input th:field="*{title}" class="form-control" id="title" placeholder="Account">
                 <label for="title">title</label>

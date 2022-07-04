@@ -28,7 +28,8 @@ public class ArticleService {
     }
 
     public void save(ArticleDetailDTO articleDetail) {
-        Article article = articleRepository.findById(articleDetail.getNum()).get();
+        Article article = null;
+        if(articleDetail.getId() != null) article = articleRepository.findById(articleDetail.getId()).orElse(null);
         if(article == null) {
             Account user = accountService.findAccountByUsername(articleDetail.getUsername());
             article = Article.builder()
@@ -55,7 +56,7 @@ public class ArticleService {
         for(Article article: articles){
             res.add(ArticleSummaryDTO
                     .builder()
-                    .num(article.getId())
+                    .id(article.getId())
                     .title(article.getTitle())
                     .username(article.getUser().getUsername())
                     .hit(article.getHit())
@@ -72,7 +73,7 @@ public class ArticleService {
         for(Article article: articles){
             res.add(ArticleSummaryDTO
                     .builder()
-                    .num(article.getId())
+                    .id(article.getId())
                     .title(article.getTitle())
                     .username(article.getUser().getUsername())
                     .hit(article.getHit())
@@ -83,25 +84,26 @@ public class ArticleService {
     }
 
     public ArticleDetailDTO findArticleDetailDTOById(Long articleId) {
-        Article article = articleRepository.findById(articleId).get();
+        Article article = articleRepository.findById(articleId).orElse(null);
         return ArticleDetailDTO.builder()
-                .num(article.getId())
+                .id(article.getId())
                 .content(article.getContent())
                 .title(article.getTitle())
                 .username(article.getUser().getUsername())
                 .hit(article.getHit())
                 .creationDate(InstantFormatter.formatString(article.getCreationDate()))
+                .updateDate(InstantFormatter.formatString(article.getUpateDate()))
                 .build();
     }
 
-    public List<ArticleSummaryDTO> findAllByUser(Account user){
+    public List<ArticleSummaryDTO> findAllByAccount(Account user){
         List<Article> articles = articleRepository.findAllByUser(user);
         List<ArticleSummaryDTO> res = new ArrayList<>();
 
         for(Article article: articles){
             res.add(ArticleSummaryDTO
                     .builder()
-                    .num(article.getId())
+                    .id(article.getId())
                     .title(article.getTitle())
                     .username(article.getUser().getUsername())
                     .hit(article.getHit())
@@ -112,7 +114,11 @@ public class ArticleService {
     }
 
     public void delete(Long id) {
-        Article article = articleRepository.findById(id).get();
+        Article article = articleRepository.findById(id).orElse(null);
         articleRepository.delete(article);
+    }
+
+    public Article findById(Long id) {
+        return articleRepository.findById(id).orElse(null);
     }
 }

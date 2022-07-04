@@ -28,13 +28,13 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr th:each="list : ${articles}">
-                                <td><span th:text="${list.num}"></span></td>
-                                <td><a th:href="@{/articles/{id}(id = ${list.num})}"><span
-                                        th:text="${list.title}"></span></a></td>
-                                <td><span th:text="${list.hit}"></span></td>
-                                <td><span th:text="${list.username}"></span></td>
-                                <td><span th:text="${list.creationDate}"></span></td>
+                            <tr th:each="article : ${articles}">
+                                <td><span th:text="${article.id}"></span></td>
+                                <td><a th:href="@{/articles/{id}(id = ${article.id})}"><span
+                                        th:text="${article.title}"></span></a></td>
+                                <td><span th:text="${article.hit}"></span></td>
+                                <td><span th:text="${article.username}"></span></td>
+                                <td><span th:text="${article.creationDate}"></span></td>
                             </tr>
                             </tbody>
                         </table>
@@ -47,7 +47,7 @@
         <form th:action="@{/articles/new}" method="get">
             <button class="btn btn-primary" type="submit">글쓰기</button>
         </form>
-    </div>s
+    </div>
 </div>
 <th:block layout:fragment="script">
     <script src="/js/datatables-simple-demo.js"></script>

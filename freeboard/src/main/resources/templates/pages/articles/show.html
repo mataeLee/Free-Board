@@ -12,8 +12,8 @@
             <div class="card-body">
                 <div class="tab-content">
                     <th:block>작성자 : <span th:text="${articleDetail.username}"></span></th:block><br>
-                    <th:block>작성일 : <span th:text="${articleDetail.creationDate}"></span></th:block>
-<!--                마지막 수정일 : <span th:text="${articleDetail.updateDate}"></span>-->
+                    <th:block>작성일 : <span th:text="${articleDetail.creationDate}"></span></th:block><br>
+                    <th:block>마지막 수정일 : <span th:text="${articleDetail.updateDate}"></span></th:block>
                 </div>
                 <hr class="one">
                 <div th:utext="${articleDetail.content}"></div>
