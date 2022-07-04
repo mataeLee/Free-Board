@@ -12,10 +12,10 @@ public class ArticleSummaryDTO {
     private String title;
     private String username;
     private int hit;
-    private Instant creationDate;
+    private String creationDate;
 
     @Builder
-    public ArticleSummaryDTO(Long num, String title, String username, int hit, Instant creationDate){
+    public ArticleSummaryDTO(Long num, String title, String username, int hit, String creationDate){
         this.num = num;
         this.title = title;
         this.username = username;

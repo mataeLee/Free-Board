@@ -44,7 +44,7 @@ public class ArticleController {
         article.setContent(content);
         article.setTitle(subject);
         articleService.save(article);
-        return "redirect:/articles";
+        return "redirect:/articles/news";
     }
 
     @GetMapping("/new")

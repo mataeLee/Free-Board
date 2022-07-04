@@ -4,6 +4,7 @@ import co.kr.promptech.freeboard.dto.ArticleDetailDTO;
 import co.kr.promptech.freeboard.dto.ArticleSummaryDTO;
 import co.kr.promptech.freeboard.model.Article;
 import co.kr.promptech.freeboard.repository.ArticleRepository;
+import co.kr.promptech.freeboard.util.InstantFormatter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -38,7 +39,7 @@ public class ArticleService {
                     .title(article.getTitle())
                     .username(article.getUser().getUsername())
                     .hit(article.getHit())
-                    .creationDate(article.getCreationDate())
+                    .creationDate(InstantFormatter.formatString(article.getCreationDate()))
                     .build());
         }
         return res;
@@ -55,7 +56,7 @@ public class ArticleService {
                     .title(article.getTitle())
                     .username(article.getUser().getUsername())
                     .hit(article.getHit())
-                    .creationDate(article.getCreationDate())
+                    .creationDate(InstantFormatter.formatString(article.getCreationDate()))
                     .build());
         }
         return res;
@@ -69,7 +70,7 @@ public class ArticleService {
                 .title(article.getTitle())
                 .username(article.getUser().getUsername())
                 .hit(article.getHit())
-                .creationDate(article.getCreationDate())
+                .creationDate(InstantFormatter.formatString(article.getCreationDate()))
                 .build();
     }
 }

@@ -4,7 +4,7 @@
       layout:decorate="~{layouts/app.html}">
 <body>
 <div layout:fragment="content" id="layoutSidenav_content">
-    <h1><span th:text="${articleDetail.title}"></span></h1><br>
+    <span th:text="${articleDetail.title}"></span>
     <div th:utext="${articleDetail.content}"></div>
 </div>
 </body>

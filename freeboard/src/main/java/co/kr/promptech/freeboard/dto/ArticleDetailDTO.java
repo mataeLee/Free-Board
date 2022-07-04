@@ -14,10 +14,10 @@ public class ArticleDetailDTO {
     private String content;
     private String username;
     private int hit;
-    private Instant creationDate;
+    private String creationDate;
 
     @Builder
-    public ArticleDetailDTO(Long num, String title, String username, int hit, Instant creationDate, String content){
+    public ArticleDetailDTO(Long num, String title, String username, int hit, String creationDate, String content){
         this.num = num;
         this.title = title;
         this.content = content;
