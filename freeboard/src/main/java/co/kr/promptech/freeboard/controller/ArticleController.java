@@ -26,7 +26,7 @@ public class ArticleController {
         List<ArticleSummaryDTO> articles = articleService.findAllByRecentPosts();
         model.addAttribute("articles", articles);
         model.addAttribute("tableTitle", "Articles");
-        return "pages/index";
+        return "pages/articles/index";
     }
 
     @GetMapping("/news")
@@ -34,7 +34,7 @@ public class ArticleController {
         List<ArticleSummaryDTO> articles = articleService.findAllByNews();
         model.addAttribute("articles", articles);
         model.addAttribute("tableTitle", "Articles News");
-        return "pages/index";
+        return "pages/articles/index";
     }
 
     @PostMapping()

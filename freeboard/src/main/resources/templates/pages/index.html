@@ -9,43 +9,12 @@
 <div layout:fragment="content" id="layoutSidenav_content">
     <div class="container-fluid px-4">
         <div class="card mb-4">
-            <div class="card-header">
-                <span th:text="${tableTitle}"></span>
-            </div>
-            <div class="card-body">
-                <div class="dataTable-wrapper dataTable-loading no-footer sortable searchable fixed-columns">
-                    <div class="dataTable-top">
-                    </div>
-                    <div class="dataTable-container">
-                        <table id="datatablesSimple" class="dataTable-table">
-                            <thead>
-                            <tr>
-                                <th data-sortable style="width: 5%;">번호</th>
-                                <th data-sortable style="width: 50%;">제목</th>
-                                <th data-sortable style="width: 5%;">조회수</th>
-                                <th data-sortable style="width: 10%;">작성자</th>
-                                <th data-sortable style="width: 15%;">작성일</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr th:each="article : ${articles}">
-                                <td><span th:text="${article.id}"></span></td>
-                                <td><a th:href="@{/articles/{id}(id = ${article.id})}"><span
-                                        th:text="${article.title}"></span></a></td>
-                                <td><span th:text="${article.hit}"></span></td>
-                                <td><span th:text="${article.username}"></span></td>
-                                <td><span th:text="${article.creationDate}"></span></td>
-                            </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div class="dataTable-bottom">
-                    </div>
-                </div>
-            </div>
+            <h1>자유 게시판입니다</h1>
+            <a th:href="@{/articles/news}">최근 게시글 보러 가기</a><br>
+            <a th:href="@{/articles/}">전체 게시글 보러 가기</a><br>
         </div>
         <form th:action="@{/articles/new}" method="get">
-            <button class="btn btn-primary" type="submit">글쓰기</button>
+            <button class="btn btn-primary" type="submit">글쓰러 가기</button>
         </form>
     </div>
 </div>

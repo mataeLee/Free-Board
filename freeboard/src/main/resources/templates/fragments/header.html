@@ -1,6 +1,6 @@
 <body class="sb-nav-fixed" th:fragment="header" xmlns:sec="http://www.w3.org/1999/xhtml">
 <div class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
-    <div class="navbar-brand ps-3">Promptech Free Board</div>
+    <div class="navbar-brand ps-3"><a class="navbar-brand ps-3" th:href="@{/}">Promptech Free Board</a></div>
     <div class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0"></div>
 
     <div sec:authorize="isAuthenticated()" class="text-white"><span sec:authentication="name"></span>님 반갑습니다.</div>

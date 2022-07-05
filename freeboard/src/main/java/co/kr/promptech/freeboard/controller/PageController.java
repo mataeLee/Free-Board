@@ -13,7 +13,7 @@ public class PageController {
 
     @GetMapping("/")
     public String home(){
-        return "redirect:articles/news";
+        return "/pages/index";
     }
 
     @GetMapping("/denied")
