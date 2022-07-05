@@ -3,13 +3,14 @@ package co.kr.promptech.freeboard.model;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.UpdateTimestamp;
-
+import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
 import javax.persistence.*;
 import java.time.Instant;
 
 @Entity
 @Getter
+@Setter
 @NoArgsConstructor
 public class Comment {
     @Id
@@ -19,8 +20,8 @@ public class Comment {
     @Column(length = 100)
     private String content;
 
-    @UpdateTimestamp
-    private Instant uptDate;
+    @CreationTimestamp
+    private Instant creationDate;
 
     @ManyToOne(targetEntity = Account.class, fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
@@ -31,10 +32,10 @@ public class Comment {
     private Article article;
 
     @Builder
-    public Comment(Long id, String content, Instant uptDate, Account user, Article article) {
+    public Comment(Long id, String content, Instant creationDate, Account user, Article article) {
         this.id = id;
         this.content = content;
-        this.uptDate = uptDate;
+        this.creationDate = creationDate;
         this.user = user;
         this.article = article;
     }

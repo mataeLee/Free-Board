@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:layout="http://www.ultraq/net/nz/thymleaf/layout"
+      xmlns:sec="http://www.w3.org/1999/xhtml" xmlns:th="http://www.w3.org/1999/html"
       layout:decorate="~{layouts/app.html}">
 <body>
 <div layout:fragment="content" id="layoutSidenav_content">
@@ -11,13 +12,30 @@
             </div>
             <div class="card-body">
                 <div class="tab-content">
-                    <th:block>작성자 : <span th:text="${articleDetail.username}"></span></th:block><br>
-                    <th:block>작성일 : <span th:text="${articleDetail.creationDate}"></span></th:block><br>
+                    <th:block>작성자 : <span th:text="${articleDetail.username}"></span></th:block>
+                    <br>
+                    <th:block>작성일 : <span th:text="${articleDetail.creationDate}"></span></th:block>
+                    <br>
                     <th:block>마지막 수정일 : <span th:text="${articleDetail.updateDate}"></span></th:block>
                 </div>
                 <hr class="one">
                 <div th:utext="${articleDetail.content}"></div>
             </div>
+        </div>
+
+        <form th:action="@{/comments/{articleId} (articleId = ${articleDetail.id})}" th:method="post"
+              sec:authorize="isAuthenticated()" th:object="${comment}">
+            <input style="width: 96%" th:field="*{content}">
+            <button type="submit" class="btn btn-primary">등록</button>
+        </form>
+        <br>
+        <div th:each="comment : ${articleDetail.comments}">
+            <th:block>작성자 : <span th:text="${comment.username}"></span></th:block>
+            <br>
+            <th:block>내용 : <span th:text="${comment.content}"></span></th:block>
+            <br>
+            <th:block>작성일 : <span th:text="${comment.creationDate}"></span></th:block>
+            <hr class="one">
         </div>
     </div>
 </div>
