@@ -53,7 +53,12 @@
                         </table>
                     </div>
                     <div class="dataTable-bottom">
-                        <div class="dataTable-info"></div>
+                        <select class="dataTable-selector" th:onchange="'window.location.href = \'' + @{/accounts/articles} + '?size=\' + this.value '">
+                            <option value="5" th:selected="${articles.size} == 5">5</option>
+                            <option value="10" th:selected="${articles.size} == 10">10</option>
+                            <option value="15" th:selected="${articles.size} == 15">15</option>
+                            <option value="20" th:selected="${articles.size} == 20">20</option>
+                        </select>
                         <nav class="dataTable-pagination">
                             <ul class="dataTable-pagination-list">
                                 <li class="dataTable-pagination" th:if="${articles.totalPages > 0}" th:each="pageNums : ${pageNums}" th:class="${pageNums==articles.number + 1} ? active">

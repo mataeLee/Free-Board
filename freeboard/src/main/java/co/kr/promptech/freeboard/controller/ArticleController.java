@@ -63,7 +63,7 @@ public class ArticleController {
             model.addAttribute("pageNums", pageNums);
         }
         model.addAttribute("tableTitle", "Articles News");
-        return "pages/articles/index";
+        return "pages/index";
     }
 
     @PostMapping()
