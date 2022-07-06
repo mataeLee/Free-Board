@@ -25,14 +25,18 @@
 
         <form th:action="@{/comments/{articleId} (articleId = ${articleDetail.id})}" th:method="post"
               sec:authorize="isAuthenticated()" th:object="${comment}">
-            <input style="width: 96%" th:field="*{content}">
-            <button type="submit" class="btn btn-primary">등록</button>
+            <!--            <input style="width: 96%" th:field="*{content}">-->
+            <div class="input-group">
+                <input class="form-control" id="content" type="text" name="content"
+                        placeholder="댓글을 남겨주세요" th:field="*{content}">
+                <button type="submit" class="btn btn-primary">등록</button>
+            </div>
         </form>
         <br>
         <div th:each="comment : ${articleDetail.comments}">
             <th:block>작성자 : <span th:text="${comment.username}"></span></th:block>
             <br>
-            <th:block>내용 : <span th:text="${comment.content}"></span></th:block>
+            <span th:text="${comment.content}"></span>
             <br>
             <th:block>작성일 : <span th:text="${comment.creationDate}"></span></th:block>
             <hr class="one">

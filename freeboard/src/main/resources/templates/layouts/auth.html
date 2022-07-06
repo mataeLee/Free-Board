@@ -1,0 +1,18 @@
+<html lang="ko"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head th:replace="fragments/header :: header"></head>
+<body>
+<div class="row justify-content-center">
+    <div class="col-lg-5">
+            <th:block layout:fragment="content" style="padding-top: 24px">Content</th:block>
+    </div>
+</div>
+<th:block th:replace="fragments/footer :: footer"></th:block>
+<!--Base scripts-->
+<th:block th:replace="fragments/scripts :: scripts"></th:block>
+<!--Page Script-->
+<th:block layout:fragment="script"></th:block>
+</body>
+</html>
