@@ -11,25 +11,20 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor
 public class CommentService {
     private final CommentRepository commentRepository;
 
-    private final AccountService accountService;
-
-    private final ArticleService articleService;
-
-    public void save(CommentDTO commentDTO) {
+    public void save(CommentDTO commentDTO, Account account, Article article) {
         Comment comment = null;
         if(commentDTO.getId() != null) comment = commentRepository.findById(commentDTO.getId()).orElse(null);
-        if(comment == null) {
-            Account user = accountService.findAccountByUsername(commentDTO.getUsername());
-            Article article = articleService.findById(commentDTO.getArticleId());
+        if(Objects.isNull(comment)) {
             comment = Comment.builder()
                     .content(commentDTO.getContent())
-                    .user(user)
+                    .user(account)
                     .article(article)
                     .build();
         }
@@ -40,17 +35,20 @@ public class CommentService {
     }
 
 
-    public List<CommentDTO> findByArticle(Long id) {
-        Article article = articleService.findById(id);
+    public List<CommentDTO> findByArticle(Article article) {
         List<Comment> comments = commentRepository.findAllByArticleOrderByCreationDateDesc(article);
         List<CommentDTO> commentDTOList = new ArrayList<>();
 
         for(Comment comment: comments){
+            String creationDate = InstantFormatter.formatString(comment.getCreationDate());
+//            String updateDate = InstantFormatter.formatString(comment.getUpateDate());
+            String username = comment.getUser().getUsername();
+
             commentDTOList.add(CommentDTO.builder()
                     .id(comment.getId())
                     .content(comment.getContent())
-                    .creationDate(InstantFormatter.formatString(comment.getCreationDate()))
-                    .username(comment.getUser().getUsername())
+                    .creationDate(creationDate)
+                    .username(username)
                     .articleId(comment.getArticle().getId())
                     .build());
         }
@@ -74,6 +72,7 @@ public class CommentService {
 
     public void delete(Long id) {
         Comment comment = commentRepository.findById(id).orElse(null);
+        if(Objects.isNull(comment)) throw new NullPointerException("comment is null");
         commentRepository.delete(comment);
     }
 }

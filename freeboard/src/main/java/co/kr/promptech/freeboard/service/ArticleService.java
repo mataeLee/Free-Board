@@ -15,27 +15,25 @@ import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor
 public class ArticleService {
     private final ArticleRepository articleRepository;
 
-    private final AccountService accountService;
-
     public void save(Article article){
         articleRepository.save(article);
     }
 
-    public void save(ArticleDetailDTO articleDetail) {
+    public void save(ArticleDetailDTO articleDetail, Account account) {
         Article article = null;
         if(articleDetail.getId() != null) article = articleRepository.findById(articleDetail.getId()).orElse(null);
-        if(article == null) {
-            Account user = accountService.findAccountByUsername(articleDetail.getUsername());
+        if(Objects.isNull(article)) {
             article = Article.builder()
                     .content(articleDetail.getContent())
                     .title(articleDetail.getTitle())
-                    .user(user)
+                    .user(account)
                     .build();
         }
         else{
@@ -50,17 +48,22 @@ public class ArticleService {
     }
 
     public List<ArticleSummaryDTO> findAllByNews() {
-        List<Article> articles = articleRepository.findAllByCreationDateBetweenOrderByCreationDateDesc(Instant.now().minus(1, ChronoUnit.DAYS), Instant.now());
+        Instant before = Instant.now().minus(1, ChronoUnit.DAYS);
+        Instant after = Instant.now();
+        List<Article> articles = articleRepository.findAllByCreationDateBetweenOrderByCreationDateDesc(before, after);
         List<ArticleSummaryDTO> res = new ArrayList<>();
 
         for(Article article: articles){
+            String creationDate = InstantFormatter.formatString(article.getCreationDate());
+            String username = article.getUser().getUsername();
+
             res.add(ArticleSummaryDTO
                     .builder()
                     .id(article.getId())
                     .title(article.getTitle())
-                    .username(article.getUser().getUsername())
+                    .username(username)
                     .hit(article.getHit())
-                    .creationDate(InstantFormatter.formatString(article.getCreationDate()))
+                    .creationDate(creationDate)
                     .build());
         }
         return res;
@@ -71,13 +74,16 @@ public class ArticleService {
         List<ArticleSummaryDTO> res = new ArrayList<>();
 
         for(Article article: articles){
+            String creationDate = InstantFormatter.formatString(article.getCreationDate());
+            String username = article.getUser().getUsername();
+
             res.add(ArticleSummaryDTO
                     .builder()
                     .id(article.getId())
                     .title(article.getTitle())
-                    .username(article.getUser().getUsername())
+                    .username(username)
                     .hit(article.getHit())
-                    .creationDate(InstantFormatter.formatString(article.getCreationDate()))
+                    .creationDate(creationDate)
                     .build());
         }
         return res;
@@ -85,29 +91,39 @@ public class ArticleService {
 
     public ArticleDetailDTO findArticleDetailDTOById(Long articleId) {
         Article article = articleRepository.findById(articleId).orElse(null);
+
+        if(Objects.isNull(article)) throw new NullPointerException("article not found");
+
+        String creationDate = InstantFormatter.formatString(article.getCreationDate());
+        String updateDate = InstantFormatter.formatString(article.getUpateDate());
+        String username = article.getUser().getUsername();
+
         return ArticleDetailDTO.builder()
                 .id(article.getId())
                 .content(article.getContent())
                 .title(article.getTitle())
-                .username(article.getUser().getUsername())
+                .username(username)
                 .hit(article.getHit())
-                .creationDate(InstantFormatter.formatString(article.getCreationDate()))
-                .updateDate(InstantFormatter.formatString(article.getUpateDate()))
+                .creationDate(creationDate)
+                .updateDate(updateDate)
                 .build();
     }
 
-    public List<ArticleSummaryDTO> findAllByAccount(Account user){
-        List<Article> articles = articleRepository.findAllByUser(user);
+    public List<ArticleSummaryDTO> findAllByAccount(Account account){
+        List<Article> articles = articleRepository.findAllByUserOrderByCreationDateDesc(account);
         List<ArticleSummaryDTO> res = new ArrayList<>();
 
         for(Article article: articles){
+            String creationDate = InstantFormatter.formatString(article.getCreationDate());
+            String username = article.getUser().getUsername();
+
             res.add(ArticleSummaryDTO
                     .builder()
                     .id(article.getId())
                     .title(article.getTitle())
-                    .username(article.getUser().getUsername())
+                    .username(username)
                     .hit(article.getHit())
-                    .creationDate(InstantFormatter.formatString(article.getCreationDate()))
+                    .creationDate(creationDate)
                     .build());
         }
         return res;
@@ -115,10 +131,13 @@ public class ArticleService {
 
     public void delete(Long id) {
         Article article = articleRepository.findById(id).orElse(null);
+        if(Objects.isNull(article)) throw new NullPointerException("article not found");
         articleRepository.delete(article);
     }
 
     public Article findById(Long id) {
-        return articleRepository.findById(id).orElse(null);
+        Article article = articleRepository.findById(id).orElse(null);
+        if(Objects.isNull(article)) throw new NullPointerException("article not found");
+        return article;
     }
 }

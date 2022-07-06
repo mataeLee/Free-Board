@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import javax.servlet.http.HttpSession;
 import java.security.Principal;
 import java.util.List;
 
@@ -30,8 +31,15 @@ public class AccountController {
     private final CommentService commentService;
 
     @GetMapping("/login")
-    public String login(){
+    public String login(HttpSession session){
         return "pages/accounts/login";
+    }
+
+    @GetMapping("/login/success")
+    public String loginSuccess(HttpSession session, Principal principal){
+        Account account = accountService.findAccountByUsername(principal.getName());
+        session.setAttribute("account", account);
+        return "redirect:/";
     }
 
     @GetMapping("/signup")
@@ -54,8 +62,8 @@ public class AccountController {
     }
 
     @GetMapping("/accounts")
-    public String show(Model model, Principal principal){
-        Account account = accountService.findAccountByUsername(principal.getName());
+    public String show(Model model, HttpSession httpSession){
+        Account account = (Account) httpSession.getAttribute("account");
         List<ArticleSummaryDTO> articles = articleService.findAllByAccount(account);
         List<CommentDTO> comments = commentService.findByAccount(account);
         model.addAttribute("articles", articles);
@@ -64,16 +72,16 @@ public class AccountController {
     }
 
     @GetMapping("/accounts/articles")
-    public String showArticles(Model model, Principal principal){
-        Account account = accountService.findAccountByUsername(principal.getName());
+    public String showArticles(Model model, HttpSession httpSession){
+        Account account = (Account) httpSession.getAttribute("account");
         List<ArticleSummaryDTO> articles = articleService.findAllByAccount(account);
         model.addAttribute("articles", articles);
         return "pages/accounts/articles";
     }
 
     @GetMapping("/accounts/comments")
-    public String showComments(Model model, Principal principal){
-        Account account = accountService.findAccountByUsername(principal.getName());
+    public String showComments(Model model, HttpSession httpSession){
+        Account account = (Account) httpSession.getAttribute("account");
         List<CommentDTO> comments = commentService.findByAccount(account);
         model.addAttribute("comments", comments);
         return "pages/accounts/comments";

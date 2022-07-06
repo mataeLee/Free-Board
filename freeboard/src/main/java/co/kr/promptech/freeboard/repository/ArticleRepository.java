@@ -21,5 +21,5 @@ public interface ArticleRepository extends CrudRepository<Article, Long> {
 
     List<Article> findAllByOrderByCreationDateDesc();
 
-    List<Article> findAllByUser(Account user);
+    List<Article> findAllByUserOrderByCreationDateDesc(Account account);
 }

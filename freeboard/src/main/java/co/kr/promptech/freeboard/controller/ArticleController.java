@@ -3,6 +3,8 @@ package co.kr.promptech.freeboard.controller;
 import co.kr.promptech.freeboard.dto.ArticleDetailDTO;
 import co.kr.promptech.freeboard.dto.ArticleSummaryDTO;
 import co.kr.promptech.freeboard.dto.CommentDTO;
+import co.kr.promptech.freeboard.model.Account;
+import co.kr.promptech.freeboard.model.Article;
 import co.kr.promptech.freeboard.service.ArticleService;
 import co.kr.promptech.freeboard.service.CommentService;
 import lombok.RequiredArgsConstructor;
@@ -10,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
 import java.security.Principal;
 import java.util.List;
 
@@ -38,9 +41,9 @@ public class ArticleController {
     }
 
     @PostMapping()
-    public String post(ArticleDetailDTO articleDetailDTO, Principal principal){
-        articleDetailDTO.setUsername(principal.getName());
-        articleService.save(articleDetailDTO);
+    public String post(ArticleDetailDTO articleDetailDTO, HttpSession httpSession){
+        Account account = (Account) httpSession.getAttribute("account");
+        articleService.save(articleDetailDTO, account);
         return "redirect:/articles/news";
     }
 
@@ -51,13 +54,18 @@ public class ArticleController {
     }
 
     @GetMapping("/{id}")
-    public String show(@PathVariable("id") Long id, Model model){
-        ArticleDetailDTO articleDetailDTO = articleService.findArticleDetailDTOById(id);
+    public String show(@PathVariable("id") Long id, Model model, HttpSession httpSession){
+        Article article = articleService.findById(id);
+        //TODO spring cache 이용하여 조회수 조절
         articleService.addHit(id);
-        List<CommentDTO> comments = commentService.findByArticle(articleDetailDTO.getId());
+        List<CommentDTO> comments = commentService.findByArticle(article);
+
+        ArticleDetailDTO articleDetailDTO = articleService.findArticleDetailDTOById(id);
         articleDetailDTO.setComments(comments);
         model.addAttribute("articleDetail", articleDetailDTO);
         model.addAttribute("comment", new CommentDTO());
+
+        httpSession.setAttribute("article", article);
         return "pages/articles/show";
     }
 
@@ -75,8 +83,9 @@ public class ArticleController {
     }
 
     @PutMapping()
-    public String update(ArticleDetailDTO articleDetail){
-        articleService.save(articleDetail);
+    public String update(ArticleDetailDTO articleDetail, HttpSession httpSession){
+        Account account = (Account) httpSession.getAttribute("account");
+        articleService.save(articleDetail, account);
         return "redirect:/accounts";
     }
 }

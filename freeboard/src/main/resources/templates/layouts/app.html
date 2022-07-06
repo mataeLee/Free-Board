@@ -2,15 +2,17 @@
       xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
-<head th:replace="fragments/header :: header">Header</head>
+<head th:replace="fragments/header :: header"></head>
 <body>
+<th:block th:replace="fragments/topnav :: topnav"></th:block>
+<!-- sb-nav-fixed #layoutSidenav #layoutSidenav_content -->
 <div id="layoutSidenav">
-    <div th:replace="fragments/navbar :: navbar" id="layoutSidenav_nav"></div>
-    <div layout:fragment="content" style="padding-top: 24px">Content</div>
+    <th:block th:replace="fragments/sidenav :: sidenav" id="layoutSidenav_nav"></th:block>
+    <th:block layout:fragment="content" class="cbox"></th:block>
 </div>
 <th:block th:replace="fragments/footer :: footer"></th:block>
-<!--Base script, config-->
-<th:block th:replace="fragments/config :: config"></th:block>
+<!--Base scripts-->
+<th:block th:replace="fragments/scripts :: scripts"></th:block>
 <!--Page Script-->
 <th:block layout:fragment="script"></th:block>
 </body>
