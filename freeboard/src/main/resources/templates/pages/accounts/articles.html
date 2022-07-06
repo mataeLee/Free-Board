@@ -27,21 +27,21 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr th:each="list : ${articles}">
-                                <td><span th:text="${list.id}"></span></td>
-                                <td><a th:href="@{/articles/{id}(id = ${list.id})}"><span
-                                        th:text="${list.title}"></span></a></td>
-                                <td><span th:text="${list.hit}"></span></td>
-                                <td><span th:text="${list.username}"></span></td>
-                                <td><span th:text="${list.creationDate}"></span></td>
+                            <tr th:each="article, iStat : ${articles}">
+                                <td><span th:text="${article.id}"></span></td>
+                                <td><a th:href="@{/articles/{id}(id = ${article.id})}"><span
+                                        th:text="${article.title}"></span></a></td>
+                                <td><span th:text="${article.hit}"></span></td>
+                                <td><span th:text="${article.username}"></span></td>
+                                <td><span th:text="${article.creationDate}"></span></td>
                                 <td>
-                                    <form th:action="@{/articles/put/{id} (id=${list.id})}" th:method="get">
+                                    <form th:action="@{/articles/put/{id} (id=${article.id})}" th:method="get">
                                         <button type="submit"
                                                 style="border: 0; background-color: transparent; width: 60px; height: 10px; color: #0a53be">수정
                                         </button>
                                     </form>
                                 <td>
-                                    <form th:action="@{/articles/{id} (id=${list.id})}" th:method="delete">
+                                    <form th:action="@{/articles/{id} (id=${article.id})}" th:method="delete">
                                         <input type="hidden" name="_method" value="delete">
                                         <button type="submit"
                                                 style="border: 0; background-color: transparent; width: 60px; height: 10px; color: #0a53be">삭제
@@ -53,6 +53,13 @@
                         </table>
                     </div>
                     <div class="dataTable-bottom">
+                        <div class="dataTable-info"></div>
+                        <nav class="dataTable-pagination">
+                            <ul class="dataTable-pagination-list">
+                                <li class="dataTable-pagination" th:if="${articles.totalPages > 0}" th:each="pageNums : ${pageNums}" th:class="${pageNums==articles.number + 1} ? active">
+                                    <a th:href="@{/accounts/articles(page=${pageNums}, size=${articles.size})}" th:text="${pageNums}"></a>
+                            </ul>
+                        </nav>
                     </div>
                 </div>
             </div>

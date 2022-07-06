@@ -26,19 +26,13 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr th:each="comment : ${comments}">
+                            <tr th:each="comment, iStat : ${comments}">
                                 <td><span th:text="${comment.id}"></span></td>
                                 <td><span th:text="${comment.content}"></span></td>
                                 <td><span th:text="${comment.username}"></span></td>
                                 <td><span th:text="${comment.creationDate}"></span></td>
                                 <td><a th:href="@{/articles/{id}(id = ${comment.articleId})}"><span
                                         th:text="${comment.articleId}"></span></a></td>
-<!--                                <td>-->
-<!--                                    <form th:action="@{/comments/put/{id} (id=${comment.id})}" th:method="get">-->
-<!--                                        <button type="submit"-->
-<!--                                                style="border: 0; background-color: transparent; width: 60px; height: 10px; color: #0a53be">수정-->
-<!--                                        </button>-->
-<!--                                    </form>-->
                                 <td>
                                     <form th:action="@{/comments/{id} (id=${comment.id})}" th:method="delete">
                                         <input type="hidden" name="_method" value="delete">
@@ -52,6 +46,13 @@
                         </table>
                     </div>
                     <div class="dataTable-bottom">
+                        <div class="dataTable-info"></div>
+                        <nav class="dataTable-pagination">
+                            <ul class="dataTable-pagination-list">
+                                <li class="dataTable-pagination" th:if="${comments.totalPages > 0}" th:each="pageNums : ${pageNums}" th:class="${pageNums==comments.number + 1} ? active">
+                                    <a th:href="@{/accounts/comments(page=${pageNums}, size=${comments.size})}" th:text="${pageNums}"></a>
+                            </ul>
+                        </nav>
                     </div>
                 </div>
             </div>

@@ -8,13 +8,18 @@ import co.kr.promptech.freeboard.model.Article;
 import co.kr.promptech.freeboard.service.ArticleService;
 import co.kr.promptech.freeboard.service.CommentService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
-import java.security.Principal;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 @Controller
 @RequestMapping("/articles")
@@ -25,36 +30,57 @@ public class ArticleController {
     private final CommentService commentService;
 
     @GetMapping()
-    public String index(Model model){
-        List<ArticleSummaryDTO> articles = articleService.findAllByRecentPosts();
-        model.addAttribute("articles", articles);
+    public String index(Model model, @RequestParam("page") Optional<Integer> page, @RequestParam("size") Optional<Integer> size) {
+        int currentPage = page.orElse(1);
+        int pageSize = size.orElse(5);
+
+        Pageable pageable = PageRequest.of(currentPage-1, pageSize);
+        Page<ArticleSummaryDTO> articlePage = articleService.findAllByPaginated(pageable);
+        model.addAttribute("articles", articlePage);
+        int totalPages = articlePage.getTotalPages();
+        if(totalPages > 0) {
+            List<Integer> pageNums = IntStream.rangeClosed(1, totalPages).boxed().collect(Collectors.toList());
+            model.addAttribute("pageNums", pageNums);
+        }
+
         model.addAttribute("tableTitle", "Articles");
         return "pages/articles/index";
     }
 
     @GetMapping("/news")
-    public String indexNews(Model model){
-        List<ArticleSummaryDTO> articles = articleService.findAllByNews();
-        model.addAttribute("articles", articles);
+    public String indexNews(Model model, @RequestParam("page") Optional<Integer> page, @RequestParam("size") Optional<Integer> size) {
+        int currentPage = page.orElse(1);
+        int pageSize = size.orElse(5);
+
+        Pageable pageable = PageRequest.of(currentPage-1, pageSize);
+        Page<ArticleSummaryDTO> articlePage = articleService.findNewsByPaginated(pageable);
+
+        model.addAttribute("articles", articlePage);
+
+        int totalPages = articlePage.getTotalPages();
+        if(totalPages > 0) {
+            List<Integer> pageNums = IntStream.rangeClosed(1, totalPages).boxed().collect(Collectors.toList());
+            model.addAttribute("pageNums", pageNums);
+        }
         model.addAttribute("tableTitle", "Articles News");
         return "pages/articles/index";
     }
 
     @PostMapping()
-    public String post(ArticleDetailDTO articleDetailDTO, HttpSession httpSession){
+    public String post(ArticleDetailDTO articleDetailDTO, HttpSession httpSession) {
         Account account = (Account) httpSession.getAttribute("account");
         articleService.save(articleDetailDTO, account);
         return "redirect:/articles/news";
     }
 
     @GetMapping("/new")
-    public String postForm(Model model){
+    public String postForm(Model model) {
         model.addAttribute("articleDetail", new ArticleDetailDTO());
         return "pages/articles/new";
     }
 
     @GetMapping("/{id}")
-    public String show(@PathVariable("id") Long id, Model model, HttpSession httpSession){
+    public String show(@PathVariable("id") Long id, Model model, HttpSession httpSession) {
         Article article = articleService.findById(id);
         //TODO spring cache 이용하여 조회수 조절
         articleService.addHit(id);
@@ -70,20 +96,20 @@ public class ArticleController {
     }
 
     @DeleteMapping("/{id}")
-    public String delete(@PathVariable Long id){
+    public String delete(@PathVariable Long id) {
         articleService.delete(id);
         return "redirect:/accounts/articles";
     }
 
     @GetMapping("/put/{id}")
-    public String updateForm(@PathVariable Long id, Model model){
+    public String updateForm(@PathVariable Long id, Model model) {
         ArticleDetailDTO articleDetailDTO = articleService.findArticleDetailDTOById(id);
         model.addAttribute("articleDetail", articleDetailDTO);
         return "pages/articles/put";
     }
 
     @PutMapping()
-    public String update(ArticleDetailDTO articleDetail, HttpSession httpSession){
+    public String update(ArticleDetailDTO articleDetail, HttpSession httpSession) {
         Account account = (Account) httpSession.getAttribute("account");
         articleService.save(articleDetail, account);
         return "redirect:/accounts";

@@ -25,7 +25,7 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr th:each="article : ${articles}">
+                            <tr th:each="article, iStat : ${articles}">
                                 <td><span th:text="${article.id}"></span></td>
                                 <td><a th:href="@{/articles/{id}(id = ${article.id})}"><span
                                         th:text="${article.title}"></span></a></td>
@@ -37,8 +37,12 @@
                         </table>
                     </div>
                     <div class="dataTable-bottom">
-                        <div class="dataTable-info">table info</div>
+                        <div class="dataTable-info"></div>
                         <nav class="dataTable-pagination">
+                            <ul class="dataTable-pagination-list">
+                                <li class="dataTable-pagination" th:if="${articles.totalPages > 0}" th:each="pageNums : ${pageNums}" th:class="${pageNums==articles.number + 1} ? active">
+                                    <a th:href="@{/articles(page=${pageNums}, size=${articles.size})}" th:text="${pageNums}"></a>
+                            </ul>
                         </nav>
                     </div>
                 </div>
@@ -51,6 +55,7 @@
 </div>
 <th:block layout:fragment="script">
     <script src="/js/datatables-simple-demo.js"></script>
+    <script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
 </th:block>
 </body>
 </html>
