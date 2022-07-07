@@ -4,11 +4,10 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.ColumnDefault;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
+import org.hibernate.annotations.*;
 
 import javax.persistence.*;
+import javax.persistence.Entity;
 import java.time.Instant;
 
 @Entity
@@ -36,8 +35,12 @@ public class Article {
     @UpdateTimestamp
     private Instant upateDate;
 
+    /**
+     *  column default = 0 오류로 인한 account id가 null인경우 admin 계정의 id값으로 저장
+     */
     @ManyToOne(targetEntity = Account.class, fetch = FetchType.EAGER)
     @JoinColumn(name="user_id")
+    @OnDelete(action = OnDeleteAction.CASCADE)
     @ColumnDefault("0")
     private Account user;
 
