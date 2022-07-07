@@ -1,6 +1,8 @@
 package co.kr.promptech.freeboard.config;
 
+import co.kr.promptech.freeboard.handler.LoginSuccessHandler;
 import co.kr.promptech.freeboard.service.AccountService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -11,14 +13,14 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
 @EnableWebSecurity
+@RequiredArgsConstructor
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
-
-    @Autowired
-    public AccountService accountService;
+    public final AccountService accountService;
 
     @Bean
     public PasswordEncoder passwordEncoder(){
@@ -30,6 +32,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         webSecurity.ignoring().antMatchers("/css/**", "/js/**", "/img/**", "/lib/**");
     }
 
+    @Bean
+    public AuthenticationSuccessHandler successHandler(){
+        return new LoginSuccessHandler();
+    }
+
     @Override
     public void configure(HttpSecurity httpSecurity) throws Exception{
         httpSecurity.authorizeRequests()
@@ -38,7 +45,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/**").permitAll();
         httpSecurity.formLogin()
                 .loginPage("/login")
-                .defaultSuccessUrl("/login/success")
+                .successHandler(successHandler())
                 .permitAll();
         httpSecurity.logout()
                 .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))

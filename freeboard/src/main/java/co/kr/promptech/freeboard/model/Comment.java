@@ -4,6 +4,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
 import javax.persistence.*;
 import java.time.Instant;
@@ -25,6 +26,7 @@ public class Comment {
 
     @ManyToOne(targetEntity = Account.class, fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
+    @ColumnDefault("0")
     private Account user;
 
     @ManyToOne(targetEntity = Article.class, fetch = FetchType.LAZY)

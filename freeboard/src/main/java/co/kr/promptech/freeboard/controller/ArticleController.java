@@ -16,6 +16,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
+import java.security.Principal;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -67,8 +68,8 @@ public class ArticleController {
     }
 
     @PostMapping()
-    public String post(ArticleDetailDTO articleDetailDTO, HttpSession httpSession) {
-        Account account = (Account) httpSession.getAttribute("account");
+    public String post(ArticleDetailDTO articleDetailDTO, HttpSession httpSession, Principal principal) {
+        Account account = (Account) httpSession.getAttribute("account_" + principal.getName());
         articleService.save(articleDetailDTO, account);
         return "redirect:/articles/news";
     }
@@ -91,7 +92,7 @@ public class ArticleController {
         model.addAttribute("articleDetail", articleDetailDTO);
         model.addAttribute("comment", new CommentDTO());
 
-        httpSession.setAttribute("article", article);
+        httpSession.setAttribute("article_" + article.getId(), article);
         return "pages/articles/show";
     }
 
@@ -109,8 +110,8 @@ public class ArticleController {
     }
 
     @PutMapping()
-    public String update(ArticleDetailDTO articleDetail, HttpSession httpSession) {
-        Account account = (Account) httpSession.getAttribute("account");
+    public String update(ArticleDetailDTO articleDetail, HttpSession httpSession, Principal principal) {
+        Account account = (Account) httpSession.getAttribute("account_" + principal.getName());
         articleService.save(articleDetail, account);
         return "redirect:/accounts";
     }

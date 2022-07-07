@@ -27,7 +27,8 @@ public class Account {
     private String email;
 
     @Builder
-    public Account(String username, String email, String password){
+    public Account(Long id, String username, String email, String password){
+        this.id = id;
         this.username = username;
         this.email = email;
         this.password = password;

@@ -36,8 +36,9 @@ public class Article {
     @UpdateTimestamp
     private Instant upateDate;
 
-    @ManyToOne(targetEntity = Account.class, fetch = FetchType.LAZY)
+    @ManyToOne(targetEntity = Account.class, fetch = FetchType.EAGER)
     @JoinColumn(name="user_id")
+    @ColumnDefault("0")
     private Account user;
 
     @Builder

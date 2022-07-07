@@ -40,13 +40,6 @@ public class AccountController {
         return "pages/accounts/login";
     }
 
-    @GetMapping("/login/success")
-    public String loginSuccess(HttpSession session, Principal principal){
-        Account account = accountService.findAccountByUsername(principal.getName());
-        session.setAttribute("account", account);
-        return "redirect:/";
-    }
-
     @GetMapping("/signup")
     public String signupForm(Model model){
         model.addAttribute("accountDTO", new AccountDTO());
@@ -67,8 +60,8 @@ public class AccountController {
     }
 
     @GetMapping("/accounts")
-    public String show(Model model, HttpSession httpSession){
-        Account account = (Account) httpSession.getAttribute("account");
+    public String show(Model model, HttpSession httpSession, Principal principal){
+        Account account = (Account) httpSession.getAttribute("account_" + principal.getName());
         List<ArticleSummaryDTO> articles = articleService.findAllByAccount(account);
         List<CommentDTO> comments = commentService.findByAccount(account);
         model.addAttribute("articles", articles);
@@ -77,8 +70,8 @@ public class AccountController {
     }
 
     @GetMapping("/accounts/articles")
-    public String showArticles(Model model, HttpSession httpSession, @RequestParam("page") Optional<Integer> page, @RequestParam("size") Optional<Integer> size){
-        Account account = (Account) httpSession.getAttribute("account");
+    public String showArticles(Model model, HttpSession httpSession, Principal principal, @RequestParam("page") Optional<Integer> page, @RequestParam("size") Optional<Integer> size){
+        Account account = (Account) httpSession.getAttribute("account_" + principal.getName());
         int currentPage = page.orElse(1);
         int pageSize = size.orElse(5);
 
@@ -94,8 +87,8 @@ public class AccountController {
     }
 
     @GetMapping("/accounts/comments")
-    public String showComments(Model model, HttpSession httpSession, @RequestParam("page") Optional<Integer> page, @RequestParam("size") Optional<Integer> size){
-        Account account = (Account) httpSession.getAttribute("account");
+    public String showComments(Model model, HttpSession httpSession, Principal principal, @RequestParam("page") Optional<Integer> page, @RequestParam("size") Optional<Integer> size){
+        Account account = (Account) httpSession.getAttribute("account_" + principal.getName());
         int currentPage = page.orElse(1);
         int pageSize = size.orElse(5);
 
