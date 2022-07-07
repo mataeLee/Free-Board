@@ -3,14 +3,17 @@
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <head th:replace="fragments/header :: header"></head>
-<body>
+<body class="sb-nav-fixed">
 <th:block th:replace="fragments/topnav :: topnav"></th:block>
-<!-- sb-nav-fixed #layoutSidenav #layoutSidenav_content -->
 <div id="layoutSidenav">
-    <th:block th:replace="fragments/sidenav :: sidenav" id="layoutSidenav_nav"></th:block>
-    <th:block layout:fragment="content" class="cbox"></th:block>
+    <div id="layoutSidenav_nav">
+        <th:block th:replace="fragments/sidenav :: sidenav"></th:block>
+    </div>
+    <div id="layoutSidenav_content">
+        <th:block layout:fragment="content"></th:block>
+        <th:block th:replace="fragments/footer :: footer"></th:block>
+    </div>
 </div>
-<th:block th:replace="fragments/footer :: footer"></th:block>
 <!--Base scripts-->
 <th:block th:replace="fragments/scripts :: scripts"></th:block>
 <!--Page Script-->

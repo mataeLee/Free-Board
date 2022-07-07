@@ -1,5 +1,5 @@
-<body class="sb-nav-fixed" th:fragment="topnav" xmlns:sec="http://www.w3.org/1999/xhtml">
-<div class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
+<div class="sb-topnav navbar navbar-expand navbar-dark bg-dark"
+     th:fragment="topnav" xmlns:sec="http://www.w3.org/1999/xhtml">
     <div class="navbar-brand ps-3"><a class="navbar-brand ps-3" th:href="@{/}">Promptech Free Board</a></div>
     <div class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0"></div>
 
@@ -11,4 +11,3 @@
         <button type="submit" sec:authorize="isAuthenticated()" class="nav-link" style="border:0; background-color: transparent">Logout</button>
     </form>
 </div>
-</body>

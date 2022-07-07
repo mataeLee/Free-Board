@@ -145,6 +145,7 @@ public class ArticleService {
     public void delete(Long id) {
         Article article = articleRepository.findById(id).orElse(null);
         if (Objects.isNull(article)) throw new NullPointerException("article not found");
+
         articleRepository.delete(article);
     }
 
@@ -153,6 +154,4 @@ public class ArticleService {
         if (Objects.isNull(article)) throw new NullPointerException("article not found");
         return article;
     }
-
-
 }

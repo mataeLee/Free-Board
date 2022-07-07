@@ -2,8 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:layout="http://www.ultraq/net/nz/thymleaf/layout"
       layout:decorate="~{layouts/app.html}">
-<body class="sb-nav-fixed">
-<div layout:fragment="content" id="layoutSidenav_content">
+<div layout:fragment="content">
     <div class="container-fluid px-4">
         <div class="card mb-4">
             <div class="card-header">
@@ -17,13 +16,13 @@
                         <table class="dataTable-table">
                             <thead>
                             <tr>
-                                <th data-sortable style="width: 5%;">번호</th>
-                                <th data-sortable style="width: 62%;">제목</th>
-                                <th data-sortable style="width: 5%;">조회수</th>
-                                <th data-sortable style="width: 8%;">작성자</th>
-                                <th data-sortable style="width: 10%;">작성일</th>
-                                <th data-sortable style="width: 5%;"></th>
-                                <th data-sortable style="width: 5%;"></th>
+                                <th class="data-sortable" style="width: 5%;">번호</th>
+                                <th class="data-sortable" style="width: 64%;">제목</th>
+                                <th class="data-sortable" style="width: 5%;">조회수</th>
+                                <th class="data-sortable" style="width: 8%;">작성자</th>
+                                <th class="data-sortable" style="width: 10%;">작성일</th>
+                                <th class="data-sortable" style="width: 4%;"></th>
+                                <th class="data-sortable" style="width: 4%;"></th>
                             </tr>
                             </thead>
                             <tbody>
@@ -36,15 +35,13 @@
                                 <td><span th:text="${article.creationDate}"></span></td>
                                 <td>
                                     <form th:action="@{/articles/put/{id} (id=${article.id})}" th:method="get">
-                                        <button type="submit"
-                                                style="border: 0; background-color: transparent; width: 60px; height: 10px; color: #0a53be">수정
+                                        <button type="submit" class="manage_btn">수정
                                         </button>
                                     </form>
                                 <td>
                                     <form th:action="@{/articles/{id} (id=${article.id})}" th:method="delete">
                                         <input type="hidden" name="_method" value="delete">
-                                        <button type="submit"
-                                                style="border: 0; background-color: transparent; width: 60px; height: 10px; color: #0a53be">삭제
+                                        <button type="submit" class="manage_btn">삭제
                                         </button>
                                     </form>
                                 </td>
@@ -71,5 +68,4 @@
         </div>
     </div>
 </div>
-</body>
 </html>
