@@ -36,7 +36,7 @@ public class AccountController {
     private final CommentService commentService;
 
     @GetMapping("/login")
-    public String login(HttpSession session){
+    public String login(){
         return "pages/accounts/login";
     }
 

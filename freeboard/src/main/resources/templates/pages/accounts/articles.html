@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:layout="http://www.ultraq/net/nz/thymleaf/layout"
+      xmlns:th="http://www.w3.org/1999/html"
       layout:decorate="~{layouts/app.html}">
 <div layout:fragment="content">
     <div class="container-fluid px-4">
@@ -35,13 +36,13 @@
                                 <td><span th:text="${article.creationDate}"></span></td>
                                 <td>
                                     <form th:action="@{/articles/put/{id} (id=${article.id})}" th:method="get">
-                                        <button type="submit" class="manage_btn">수정
+                                        <button type="submit" class="manage-btn">수정
                                         </button>
                                     </form>
                                 <td>
                                     <form th:action="@{/articles/{id} (id=${article.id})}" th:method="delete">
                                         <input type="hidden" name="_method" value="delete">
-                                        <button type="submit" class="manage_btn">삭제
+                                        <button type="submit" class="manage-btn">삭제
                                         </button>
                                     </form>
                                 </td>

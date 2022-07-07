@@ -6,12 +6,22 @@
   top: 56px;
 }
 
-.manage_btn {
+.manage-btn {
   border: 0;
   background-color: transparent;
   width: 60px;
   height: 10px;
   color: #0a53be;
+}
+
+.auth-btn {
+  display: block;
+  padding: 0.5rem 1rem;
+  color: #0d6efd;
+  text-decoration: none;
+  background-color: transparent;
+  border: 0;
+  transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out;
 }
 
 /*# sourceMappingURL=app.css.map */

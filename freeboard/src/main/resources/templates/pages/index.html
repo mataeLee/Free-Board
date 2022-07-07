@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:layout="http://www.ultraq/net/nz/thymleaf/layout"
+      xmlns:th="http://www.w3.org/1999/html"
       layout:decorate="~{layouts/app.html}">
 <div layout:fragment="content">
     <div class="container-fluid px-4">
@@ -16,11 +17,11 @@
                         <table id="datatablesSimple" class="dataTable-table">
                             <thead>
                             <tr>
-                                <th data-sortable style="width: 5%;">번호</th>
-                                <th data-sortable style="width: 50%;">제목</th>
-                                <th data-sortable style="width: 5%;">조회수</th>
-                                <th data-sortable style="width: 10%;">작성자</th>
-                                <th data-sortable style="width: 15%;">작성일</th>
+                                <th style="width: 5%;">번호</th>
+                                <th style="width: 50%;">제목</th>
+                                <th style="width: 5%;">조회수</th>
+                                <th style="width: 10%;">작성자</th>
+                                <th style="width: 15%;">작성일</th>
                             </tr>
                             </thead>
                             <tbody>
