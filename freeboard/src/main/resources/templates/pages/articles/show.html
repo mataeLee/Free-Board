@@ -1,14 +1,27 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:layout="http://www.ultraq/net/nz/thymleaf/layout"
-      xmlns:sec="http://www.w3.org/1999/xhtml" xmlns:th="http://www.w3.org/1999/html"
+      xmlns:sec="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.w3.org/1999/html"
       layout:decorate="~{layouts/app.html}">
 <div layout:fragment="content">
     <div class="container-fluid px-4">
         <div class="card mb-4">
             <div class="card-header">
-                <span th:text="${articleDetail.title}"></span><br>
-                <div></div>
+                <span th:text="${articleDetail.title}"></span>
+                <form class="d-md-inline-block ms-auto"
+                      th:if="${#authentication.getName()} == ${articleDetail.username}"
+                      th:action="@{/articles/put/{id} (id=${articleDetail.id})}" th:method="get">
+                    <button type="submit" class="manage-btn">수정
+                    </button>
+                </form>
+                <form class="d-md-inline-block ms-auto"
+                      th:if="${#authentication.getName()} == ${articleDetail.username}"
+                      th:action="@{/articles/{id} (id=${articleDetail.id})}" th:method="delete">
+                    <input type="hidden" name="_method" value="delete">
+                    <button type="submit" class="manage-btn">삭제
+                    </button>
+                </form>
             </div>
             <div class="card-body">
                 <div class="tab-content">
@@ -34,6 +47,13 @@
         <br>
         <div th:each="comment : ${articleDetail.comments}">
             <th:block>작성자 : <span th:text="${comment.username}"></span></th:block>
+            <form class="d-md-inline-block ms-auto"
+                  th:if="${#authentication.getName()} == ${comment.username}"
+                  th:action="@{/comments/{id}/{articleId} (id=${comment.id}, articleId=${articleDetail.id})}" th:method="delete">
+                <input type="hidden" name="_method" value="delete">
+                <button type="submit" class="manage-btn">삭제
+                </button>
+            </form>
             <br>
             <span th:text="${comment.content}"></span>
             <br>

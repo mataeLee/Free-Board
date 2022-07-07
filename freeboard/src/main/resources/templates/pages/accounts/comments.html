@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:layout="http://www.ultraq/net/nz/thymleaf/layout"
+      xmlns:th="http://www.w3.org/1999/html"
       layout:decorate="~{layouts/app.html}">
 <div layout:fragment="content">
     <div class="container-fluid px-4">
@@ -32,9 +33,9 @@
                                 <td><a th:href="@{/articles/{id}(id = ${comment.articleId})}"><span
                                         th:text="${comment.articleId}"></span></a></td>
                                 <td>
-                                    <form th:action="@{/comments/{id} (id=${comment.id})}" th:method="delete">
+                                    <form th:action="@{/comments/{id}/{articleId} (id=${comment.id}, articleId=${-1})}" th:method="delete">
                                         <input type="hidden" name="_method" value="delete">
-                                        <button type="submit" class="manage_btn">삭제
+                                        <button type="submit" class="manage-btn">삭제
                                         </button>
                                     </form>
                                 </td>
