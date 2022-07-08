@@ -13,6 +13,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
@@ -68,7 +70,10 @@ public class ArticleController {
     }
 
     @PostMapping()
-    public String post(ArticleDetailDTO articleDetailDTO, HttpSession httpSession, Principal principal) {
+    public String post(@ModelAttribute("articleDetail") @Validated ArticleDetailDTO articleDetailDTO, BindingResult result, HttpSession httpSession, Principal principal) {
+        if(result.hasErrors()){
+            return "pages/articles/new";
+        }
         Account account = (Account) httpSession.getAttribute("account_" + principal.getName());
         articleService.save(articleDetailDTO, account);
         return "redirect:/articles/news";
@@ -110,9 +115,12 @@ public class ArticleController {
     }
 
     @PutMapping()
-    public String update(ArticleDetailDTO articleDetail, HttpSession httpSession, Principal principal) {
+    public String update(@ModelAttribute("articleDetail") @Validated ArticleDetailDTO articleDetail, BindingResult result, HttpSession httpSession, Principal principal) {
+        if(result.hasErrors()){
+            return "pages/articles/put";
+        }
         Account account = (Account) httpSession.getAttribute("account_" + principal.getName());
         articleService.save(articleDetail, account);
-        return "redirect:/accounts";
+        return "redirect:/accounts/articles";
     }
 }

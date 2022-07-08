@@ -4,17 +4,19 @@
       xmlns:layout="http://www.ultraq/net/nz/thymleaf/layout"
       layout:decorate="~{layouts/app.html}">
 <div layout:fragment="content">
-    <div class="card-body">
-        <form th:action="@{/articles}" method="post" th:object="${articleDetail}">
-            <div class="form-floating mb-3">
-                <input th:field="*{title}" class="form-control" id="title" type="text" name="title"
-                       placeholder="Account"/>
-                <label for="title">title</label>
-            </div>
-            <textarea th:field="*{content}" id="summernote" type="text" name="content" rows="10"></textarea>
-            <button class="btn btn-primary" type="submit">완료</button>
-            <a class="btn btn-primary" href="/">취소</a>
-        </form>
+    <div class="container-fluid px-4">
+        <div class="card-body">
+            <form th:action="@{/articles}" method="post" th:object="${articleDetail}">
+                <div class="error-msg" th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></div>
+                <div class="form-floating mb-3">
+                    <input th:field="*{title}" maxlength="100" class="form-control" id="title" type="text" name="title" required/>
+                    <label for="title">title</label>
+                </div>
+                <textarea th:field="*{content}" id="summernote" type="text" name="content" rows="10" maxlength="8000"></textarea>
+                <button class="btn btn-primary" type="submit">완료</button>
+                <a class="btn btn-primary" href="/">취소</a>
+            </form>
+        </div>
     </div>
 </div>
 <th:block layout:fragment="script">

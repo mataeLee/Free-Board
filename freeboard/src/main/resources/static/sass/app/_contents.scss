@@ -10,14 +10,14 @@
   color: #f5c2c7 !important;
   background-color: #1a1e21 !important;
   border-color:  #f5c2c7 !important;
-  border-width: 2px !important;
+  border-width: 3px !important;
 }
 
 .dataTable-pagination a {
   color: #f5c2c7 !important;
   background-color: #1a1e21 !important;
   border-color:  #f5c2c7 !important;
-  border-width: 2px !important;
+  border-width: 3px !important;
 }
 
 .card-header{
@@ -73,5 +73,39 @@
   padding: 0.5rem 1rem;
   margin-bottom: 0;
   //border-top: 3px solid  #1a1e21;
-
 }
+
+//
+.article-box{
+  position: relative;
+  display: block;
+  min-width: 0;
+  background-clip: border-box;
+}
+
+.article-header{
+  padding: 0.5rem 1rem;
+  margin-bottom: 0;
+  background-color: rgba(0, 0, 0, 0.03);
+  font-size: small !important;
+  height: 37px !important;
+}
+
+.article-element{
+  float: right;
+  display: inline;
+}
+
+.article-header > div:first-child{
+  float: left;
+}
+
+.article-box > hr{
+  margin: 0.55rem;
+}
+
+.article-body{
+  padding: 0.5rem 1rem;
+  margin-bottom: 0;
+}
+

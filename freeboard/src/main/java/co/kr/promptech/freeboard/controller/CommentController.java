@@ -13,6 +13,8 @@ import org.springframework.security.web.savedrequest.RequestCache;
 import org.springframework.security.web.savedrequest.SavedRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -28,7 +30,7 @@ public class CommentController {
     private final CommentService commentService;
 
     @PostMapping("/{articleId}")
-    public String post(@PathVariable Long articleId, CommentDTO commentDTO, HttpSession httpSession, Principal principal) {
+    public String post(CommentDTO commentDTO, HttpSession httpSession, Principal principal) {
         Account account = (Account) httpSession.getAttribute("account_" + principal.getName());
         Article article = (Article) httpSession.getAttribute("article_" + commentDTO.getArticleId());
         commentService.save(commentDTO, account, article);

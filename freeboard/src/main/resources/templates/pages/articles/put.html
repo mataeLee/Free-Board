@@ -4,19 +4,22 @@
       xmlns:layout="http://www.ultraq/net/nz/thymleaf/layout"
       layout:decorate="~{layouts/app.html}">
 <div layout:fragment="content">
-    <div class="card-body">
-        <form th:action="@{/articles}" th:method="put" th:object="${articleDetail}">
-            <input type="hidden" name="_method" value="put">
-            <input type="hidden" th:field="*{id}"></th:field>
-            <div class="form-floating mb-3">
-                <input th:field="*{title}" class="form-control" id="title" placeholder="Account">
-                <label for="title">title</label>
-            </div>
-            <textarea th:field="*{content}" id="summernote" type="text" name="content" rows="10">
+    <div class="container-fluid px-4">
+        <div class="card-body">
+            <form th:action="@{/articles}" th:method="put" th:object="${articleDetail}">
+                <input type="hidden" name="_method" value="put">
+                <input type="hidden" th:field="*{id}"></th:field>
+                <div class="error-msg" th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></div>
+                <div class="form-floating mb-3">
+                    <input th:field="*{title}" class="form-control" id="title" maxlength="100" required>
+                    <label for="title">title</label>
+                </div>
+                <textarea th:field="*{content}" id="summernote" type="text" name="content" rows="10" maxlength="8000">
             </textarea>
-            <button class="btn btn-primary" type="submit">완료</button>
-            <a class="btn btn-primary" href="/accounts/articles">취소</a>
-        </form>
+                <button class="btn btn-primary" type="submit">완료</button>
+                <a class="btn btn-primary" href="/accounts/articles">취소</a>
+            </form>
+        </div>
     </div>
 </div>
 <th:block layout:fragment="script">

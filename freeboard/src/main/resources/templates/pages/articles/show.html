@@ -9,39 +9,41 @@
         <div class="card mb-4">
             <div class="card-header">
                 <span th:text="${articleDetail.title}"></span>
-                <form class="d-md-inline-block ms-auto"
-                      th:if="${#authentication.getName()} == ${articleDetail.username}"
-                      th:action="@{/articles/put/{id} (id=${articleDetail.id})}" th:method="get">
-                    <button type="submit" class="manage-btn">수정
-                    </button>
-                </form>
-                <form class="d-md-inline-block ms-auto"
+                <form class="article-element"
                       th:if="${#authentication.getName()} == ${articleDetail.username}"
                       th:action="@{/articles/{id} (id=${articleDetail.id})}" th:method="delete">
                     <input type="hidden" name="_method" value="delete">
                     <button type="submit" class="manage-btn">삭제
                     </button>
                 </form>
+                <form class="article-element"
+                      th:if="${#authentication.getName()} == ${articleDetail.username}"
+                      th:action="@{/articles/put/{id} (id=${articleDetail.id})}" th:method="get">
+                    <button type="submit" class="manage-btn">수정
+                    </button>
+                </form>
             </div>
             <div class="card-body">
-                <div class="tab-content">
-                    <th:block>작성자 : <span th:text="${articleDetail.username}"></span></th:block>
-                    <br>
-                    <th:block>작성일 : <span th:text="${articleDetail.creationDate}"></span></th:block>
-                    <br>
-                    <th:block>마지막 수정일 : <span th:text="${articleDetail.updateDate}"></span></th:block>
+                <div class="article-box">
+                    <div class="article-header">
+                        <div class="article-element"><span th:text="${articleDetail.username}"></span></div>
+                        <div class="article-element">작성일 : <span th:text="${articleDetail.creationDate}"></span></div>
+                        <div class="article-element">마지막 수정일 : <span th:text="${articleDetail.updateDate}"></span>&nbsp;&nbsp;&nbsp;</div>
+                    </div>
+                    <hr class="one">
+                    <div class="article-body">
+                        <div th:utext="${articleDetail.content}"></div>
+                    </div>
                 </div>
-                <hr class="one">
-                <div th:utext="${articleDetail.content}"></div>
             </div>
         </div>
 
         <form th:action="@{/comments/{articleId} (articleId = ${articleDetail.id})}" th:method="post"
               sec:authorize="isAuthenticated()" th:object="${comment}">
             <div class="input-group">
-                <input class="form-control" id="content" type="text" name="content"
-                       placeholder="댓글을 남겨주세요" th:field="*{content}">
-                <button type="submit" class="btn btn-primary">등록</button>
+                <input class="form-control" maxlength="100" id="content" type="text" name="content"
+                       placeholder="댓글을 남겨주세요 (최대 100자)" th:field="*{content}" required>
+                <button id="comment-btn" type="submit" class="btn btn-primary">등록</button>
             </div>
         </form>
         <br>

@@ -15,26 +15,20 @@
                        th:field="*{username}"
                        placeholder="Account"/>
                 <label for="username">Account</label>
-                <div th:if="${#fields.hasErrors('username')}" th:errors="*{username}"
-                     style="color:red">Account error
-                </div>
+                <div class="error-msg" th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></div>
             </div>
             <div class="form-floating mb-3">
                 <input class="form-control" id="email" name="email" type="email" th:field="*{email}"
                        placeholder="name@example.com"/>
                 <label for="email">Email address</label>
-                <div th:if="${#fields.hasErrors('email')}" th:errors="*{email}" style="color:red">
-                    Email error
-                </div>
+                <div class="error-msg" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
             </div>
             <div class="form-floating mb-3">
                 <input class="form-control" id="password" name="password"
                        th:field="*{password}"
                        type="password" placeholder="Password"/>
                 <label for="password">Password</label>
-                <div th:if="${#fields.hasErrors('password')}" th:errors="*{password}"
-                     style="color:red">Password error
-                </div>
+                <div class="error-msg" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></div>
             </div>
             <div class="mt-4 mb-0 d-grid">
                 <button class="btn btn-primary btn-block" type="submit">Create Account
