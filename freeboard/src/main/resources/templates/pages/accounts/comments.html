@@ -26,8 +26,8 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr th:each="comment, iStat : ${comments}">
-                                <td><span th:text="${comment.id}"></span></td>
+                            <tr th:each="comment, it : ${comments}">
+                                <td><span th:text="${it.index+1}"></span></td>
                                 <td><span th:text="${comment.content}"></span></td>
                                 <td><span th:text="${comment.username}"></span></td>
                                 <td><span th:text="${comment.creationDate}"></span></td>

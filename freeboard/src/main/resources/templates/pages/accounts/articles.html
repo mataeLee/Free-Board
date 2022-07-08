@@ -27,14 +27,13 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr th:each="article, iStat : ${articles}">
-                                <td><span th:text="${article.id}"></span></td>
-                                <td><a th:href="@{/articles/{id}(id = ${article.id})}"><span
-                                        th:text="${article.title}"></span></a></td>
+                            <tr th:each="article, it : ${articles}" th:onclick="|location.href='@{/articles/{id}(id = ${article.id})}'|">
+                                <td><span th:text="${it.index+1}"></span></td>
+                                <td><span th:text="${article.title}"></span></td>
                                 <td><span th:text="${article.hit}"></span></td>
                                 <td><span th:text="${article.username}"></span></td>
                                 <td><span th:text="${article.creationDate}"></span></td>
-                                <td>
+                                <td th:onclick="|location.href='@{/articles/put/{id} (id=${article.id})}'|">
                                     <form th:action="@{/articles/put/{id} (id=${article.id})}" th:method="get">
                                         <button type="submit" class="manage-btn">수정
                                         </button>
