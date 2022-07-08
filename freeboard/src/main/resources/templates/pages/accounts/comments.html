@@ -13,6 +13,7 @@
                 <div class="dataTable-wrapper dataTable-loading no-footer sortable searchable fixed-columns">
                     <div class="dataTable-top">
                     </div>
+                    <div class="dataTable-container">
                         <table class="dataTable-table">
                             <thead>
                             <tr>
@@ -33,7 +34,8 @@
                                 <td><a th:href="@{/articles/{id}(id = ${comment.articleId})}"><span
                                         th:text="${comment.articleId}"></span></a></td>
                                 <td>
-                                    <form th:action="@{/comments/{id}/{articleId} (id=${comment.id}, articleId=${-1})}" th:method="delete">
+                                    <form th:action="@{/comments/{id}/{articleId} (id=${comment.id}, articleId=${-1})}"
+                                          th:method="delete">
                                         <input type="hidden" name="_method" value="delete">
                                         <button type="submit" class="manage-btn">삭제
                                         </button>
@@ -44,7 +46,8 @@
                         </table>
                     </div>
                     <div class="dataTable-bottom">
-                        <select class="dataTable-selector" th:onchange="'window.location.href = \'' + @{/accounts/comments} + '?size=\' + this.value '">
+                        <select class="dataTable-selector"
+                                th:onchange="'window.location.href = \'' + @{/accounts/comments} + '?size=\' + this.value '">
                             <option value="5" th:selected="${comments.size} == 5">5</option>
                             <option value="10" th:selected="${comments.size} == 10">10</option>
                             <option value="15" th:selected="${comments.size} == 15">15</option>
@@ -52,8 +55,11 @@
                         </select>
                         <nav class="dataTable-pagination">
                             <ul class="dataTable-pagination-list">
-                                <li class="dataTable-pagination" th:if="${comments.totalPages > 0}" th:each="pageNums : ${pageNums}" th:class="${pageNums==comments.number + 1} ? active">
-                                    <a th:href="@{/accounts/comments(page=${pageNums}, size=${comments.size})}" th:text="${pageNums}"></a>
+                                <li class="dataTable-pagination" th:if="${comments.totalPages > 0}"
+                                    th:each="pageNums : ${pageNums}"
+                                    th:class="${pageNums==comments.number + 1} ? active">
+                                    <a th:href="@{/accounts/comments(page=${pageNums}, size=${comments.size})}"
+                                       th:text="${pageNums}"></a>
                             </ul>
                         </nav>
                     </div>
@@ -61,5 +67,6 @@
             </div>
         </div>
     </div>
+</div>
 </div>
 </html>

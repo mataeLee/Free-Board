@@ -1,4 +1,4 @@
-<div class="sb-topnav navbar navbar-expand navbar-dark bg-dark"
+<nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark"
      th:fragment="topnav" xmlns:sec="http://www.w3.org/1999/xhtml">
     <div class="navbar-brand ps-3">
         <a class="navbar-brand ps-3" th:href="@{/}">Promptech Free Board</a>
@@ -12,4 +12,4 @@
         <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
         <button type="submit" sec:authorize="isAuthenticated()" class="auth-btn">Logout</button>
     </form>
-</div>
+</nav>
