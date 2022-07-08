@@ -45,19 +45,22 @@
             </div>
         </form>
         <br>
-        <div th:each="comment : ${articleDetail.comments}">
-            <th:block>작성자 : <span th:text="${comment.username}"></span></th:block>
-            <form class="d-md-inline-block ms-auto"
-                  th:if="${#authentication.getName()} == ${comment.username}"
-                  th:action="@{/comments/{id}/{articleId} (id=${comment.id}, articleId=${articleDetail.id})}" th:method="delete">
-                <input type="hidden" name="_method" value="delete">
-                <button type="submit" class="manage-btn">삭제
-                </button>
-            </form>
-            <br>
-            <span th:text="${comment.content}"></span>
-            <br>
-            <th:block>작성일 : <span th:text="${comment.creationDate}"></span></th:block>
+        <div class="comment-box" th:each="comment : ${articleDetail.comments}">
+            <div class="comment-header">
+                <div class="comment-element"><span th:text="${comment.username}"></span></div>
+                <div class="comment-element"><span th:text="${comment.creationDate}"></span></div>
+            </div>
+            <div class="comment-body">
+                <span th:text="${comment.content}"></span>
+                <form class="comment-element"
+                      th:if="${#authentication.getName()} == ${comment.username}"
+                      th:action="@{/comments/{id}/{articleId} (id=${comment.id}, articleId=${articleDetail.id})}"
+                      th:method="delete">
+                    <input type="hidden" name="_method" value="delete">
+                    <button type="submit" class="manage-btn">삭제
+                    </button>
+                </form>
+            </div>
             <hr class="one">
         </div>
     </div>

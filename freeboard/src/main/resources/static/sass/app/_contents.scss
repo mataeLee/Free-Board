@@ -19,3 +19,59 @@
   border-color:  #f5c2c7 !important;
   border-width: 2px !important;
 }
+
+.card-header{
+  background-color: #f8d7da !important;
+  border-top: 3px solid  #1a1e21;
+  border-left: 3px solid  #1a1e21;
+  border-right: 3px solid  #1a1e21;
+}
+
+.card-body{
+  border-top: 3px solid  #1a1e21;
+  border-bottom: 3px solid  #1a1e21;
+  border-left: 3px solid  #1a1e21;
+  border-right: 3px solid  #1a1e21;
+}
+
+.card-footer{
+  background-color: #f8d7da !important;
+  border-bottom: 3px solid  #1a1e21;
+  border-left: 3px solid  #1a1e21;
+  border-right: 3px solid  #1a1e21;
+}
+
+.comment-box{
+  position: relative;
+  display: block;
+  min-width: 0;
+  background-clip: border-box;
+}
+
+.comment-header{
+  padding: 0.5rem 1rem;
+  margin-bottom: 0;
+  background-color: rgba(0, 0, 0, 0.03);
+  font-size: small !important;
+  height: 37px !important;
+}
+
+.comment-element{
+  float: right;
+  display: inline;
+}
+
+.comment-header > div:first-child{
+  float: left;
+}
+
+.comment-box > hr{
+  margin: 0.55rem;
+}
+
+.comment-body{
+  padding: 0.5rem 1rem;
+  margin-bottom: 0;
+  //border-top: 3px solid  #1a1e21;
+
+}
