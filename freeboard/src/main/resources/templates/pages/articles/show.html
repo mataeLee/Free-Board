@@ -26,6 +26,7 @@
             <div class="card-body">
                 <div class="article-box">
                     <div class="article-header">
+                        <img class="article-profile-img" th:src="@{'/'+${articleDetail.getUserprofile()}}"/>
                         <div class="article-element"><span th:text="${articleDetail.username}"></span></div>
                         <div class="article-element">작성일 : <span th:text="${articleDetail.creationDate}"></span></div>
                         <div class="article-element">마지막 수정일 : <span th:text="${articleDetail.updateDate}"></span>&nbsp;&nbsp;&nbsp;</div>
@@ -49,6 +50,7 @@
         <br>
         <div class="comment-box" th:each="comment : ${articleDetail.comments}">
             <div class="comment-header">
+                <img class="comment-profile-img" th:src="@{'/'+${comment.getUserprofile()}}"/>
                 <div class="comment-element"><span th:text="${comment.username}"></span></div>
                 <div class="comment-element"><span th:text="${comment.creationDate}"></span></div>
             </div>

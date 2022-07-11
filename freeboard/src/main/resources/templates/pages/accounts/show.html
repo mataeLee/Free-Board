@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:layout="http://www.ultraq/net/nz/thymleaf/layout"
+      xmlns:th="http://www.thymeleaf.org"
       layout:decorate="~{layouts/app.html}">
 <div layout:fragment="content">
     <div class="container-fluid px-4">
@@ -9,7 +10,12 @@
                 <span>My Account</span>
             </div>
             <div class="card-body">
-
+                <form th:method="put" enctype="multipart/form-data" th:action="@{/accounts/profileImage}">
+                    <input type="hidden" name="_method" value="put">
+                    <input type="file" name="profile">
+                    <button class="btn btn-primary" type="submit">완료</button>
+                </form>
+                <img class="profile-img" th:src="@{${account.getProfileImage()}}"/>
             </div>
         </div>
     </div>

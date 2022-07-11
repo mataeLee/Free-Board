@@ -28,6 +28,7 @@ public class ArticleFormatter {
                     .content(article.getContent())
                     .title(article.getTitle())
                     .username(article.getUser().getUsername())
+                    .userprofile(article.getUser().getProfileImage())
                     .hit(article.getHit())
                     .creationDate(InstantFormatter.formatString(article.getCreationDate()))
                     .updateDate(InstantFormatter.formatString(article.getUpateDate()))

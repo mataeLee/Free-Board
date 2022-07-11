@@ -9,6 +9,7 @@ public class CommentFormatter {
                 .builder()
                 .id(comment.getId())
                 .username(comment.getUser().getUsername())
+                .userprofile(comment.getUser().getProfileImage())
                 .articleId(comment.getArticle().getId())
                 .content(comment.getContent())
                 .creationDate(InstantFormatter.formatString(comment.getCreationDate()))

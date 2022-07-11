@@ -47,17 +47,7 @@ public class CommentService {
         List<CommentDTO> commentDTOList = new ArrayList<>();
 
         for(Comment comment: comments){
-            String creationDate = InstantFormatter.formatString(comment.getCreationDate());
-//            String updateDate = InstantFormatter.formatString(comment.getUpateDate());
-            String username = comment.getUser().getUsername();
-
-            commentDTOList.add(CommentDTO.builder()
-                    .id(comment.getId())
-                    .content(comment.getContent())
-                    .creationDate(creationDate)
-                    .username(username)
-                    .articleId(comment.getArticle().getId())
-                    .build());
+            commentDTOList.add(CommentFormatter.toDTO(comment));
         }
         return commentDTOList;
     }
@@ -66,13 +56,7 @@ public class CommentService {
         List<Comment> comments = commentRepository.findAllByUserOrderByCreationDateDesc(account);
         List<CommentDTO> commentDTOList = new ArrayList<>();
         for(Comment comment : comments){
-            commentDTOList.add(CommentDTO.builder()
-                    .id(comment.getId())
-                    .content(comment.getContent())
-                    .creationDate(InstantFormatter.formatString(comment.getCreationDate()))
-                    .username(comment.getUser().getUsername())
-                    .articleId(comment.getArticle().getId())
-                    .build());
+            commentDTOList.add(CommentFormatter.toDTO(comment));
         }
         return commentDTOList;
     }

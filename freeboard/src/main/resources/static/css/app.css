@@ -53,7 +53,12 @@
   margin-bottom: 0;
   background-color: rgba(0, 0, 0, 0.03);
   font-size: small !important;
-  height: 37px !important;
+  height: 40px !important;
+}
+
+.comment-profile-img {
+  width: 20px !important;
+  height: 20px !important;
 }
 
 .comment-element {
@@ -61,8 +66,8 @@
   display: inline;
 }
 
-.comment-header > div:first-child {
-  float: left;
+.comment-header > div:first-child .comment-header > img:first-child {
+  float: left !important;
 }
 
 .comment-box > hr {
@@ -86,7 +91,7 @@
   margin-bottom: 0;
   background-color: rgba(0, 0, 0, 0.03);
   font-size: small !important;
-  height: 37px !important;
+  height: 60px !important;
 }
 
 .article-element {
@@ -94,8 +99,8 @@
   display: inline;
 }
 
-.article-header > div:first-child {
-  float: left;
+.article-header > div:first-child .article-header > img:first-child {
+  float: left !important;
 }
 
 .article-box > hr {
@@ -107,10 +112,20 @@
   margin-bottom: 0;
 }
 
+.article-profile-img {
+  width: 32px !important;
+  height: 32px !important;
+}
+
 .manage-btn {
   border: 0;
   background-color: transparent;
   color: #0a53be;
+}
+
+.profile-img {
+  width: 64px !important;
+  height: 64px !important;
 }
 
 .auth-btn {
