@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:layout="http://www.ultraq/net/nz/thymleaf/layout"
-      xmlns:th="http://www.w3.org/1999/html"
+      xmlns:th="http://www.thymeleaf.org"
       layout:decorate="~{layouts/app.html}">
 <div layout:fragment="content">
     <div class="container-fluid px-4">
@@ -44,7 +44,6 @@
                                 <option value="20" th:selected="${articles.size} == 20">20</option>
                             </select>
                         </div>
-                        <div class="dataTable-info"></div>
                         <nav class="dataTable-pagination">
                             <ul class="dataTable-pagination-list">
                                 <li class="dataTable-pagination" th:if="${articles.totalPages > 0}"
