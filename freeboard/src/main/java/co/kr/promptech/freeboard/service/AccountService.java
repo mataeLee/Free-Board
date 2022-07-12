@@ -3,6 +3,7 @@ package co.kr.promptech.freeboard.service;
 import co.kr.promptech.freeboard.dto.AccountDTO;
 import co.kr.promptech.freeboard.model.Account;
 import co.kr.promptech.freeboard.repository.AccountRepository;
+import co.kr.promptech.freeboard.util.ValidExtension;
 import groovy.util.logging.Slf4j;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.io.FilenameUtils;
@@ -78,6 +79,8 @@ public class AccountService implements UserDetailsService {
         }
         try {
             String extension = FilenameUtils.getExtension(profileImage.getOriginalFilename());
+            if(!ValidExtension.validation(extension)) return false;
+
             String fileName = account.getUsername() + "." + extension;
             String filePath = resourcePath + dirPath + fileName ;
 

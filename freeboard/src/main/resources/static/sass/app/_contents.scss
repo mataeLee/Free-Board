@@ -61,12 +61,17 @@
   height: 20px !important;
 }
 
-.comment-element{
+.comment-element-left{
+  float: left;
+  display: inline;
+}
+
+.comment-element-right{
   float: right;
   display: inline;
 }
 
-.comment-header > div:first-child
+.comment-header > div:first-child,
 .comment-header > img:first-child{
   float: left !important;
 }
@@ -78,10 +83,8 @@
 .comment-body{
   padding: 0.5rem 1rem;
   margin-bottom: 0;
-  //border-top: 3px solid  #1a1e21;
 }
 
-//
 .article-box{
   position: relative;
   display: block;
@@ -97,12 +100,17 @@
   height: 60px !important;
 }
 
-.article-element{
+.article-element-right{
   float: right;
   display: inline;
 }
 
-.article-header > div:first-child
+.article-element-left{
+  float: left;
+  display: inline;
+}
+
+.article-header > div:first-child,
 .article-header > img:first-child{
   float: left !important;
 }

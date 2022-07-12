@@ -107,7 +107,7 @@ public class ArticleController {
         return "redirect:/accounts/articles";
     }
 
-    @GetMapping("/put/{id}")
+    @GetMapping("/{id}/edit")
     public String updateForm(@PathVariable Long id, Model model) {
         ArticleDetailDTO articleDetailDTO = articleService.findArticleDetailDTOById(id);
         model.addAttribute("articleDetail", articleDetailDTO);

@@ -38,7 +38,7 @@ public class Article {
     /**
      *  column default = 0 오류로 인한 account id가 null인경우 admin 계정의 id값으로 저장
      */
-    @ManyToOne(targetEntity = Account.class, fetch = FetchType.EAGER)
+    @ManyToOne(targetEntity = Account.class, fetch = FetchType.LAZY)
     @JoinColumn(name="user_id")
     @OnDelete(action = OnDeleteAction.CASCADE)
     @ColumnDefault("0")

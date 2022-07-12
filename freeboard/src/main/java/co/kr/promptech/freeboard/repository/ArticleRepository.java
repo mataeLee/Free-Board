@@ -19,6 +19,8 @@ public interface ArticleRepository extends CrudRepository<Article, Long> {
 
     List<Article> findAllByCreationDateBetweenOrderByCreationDateDesc(Instant before, Instant after);
 
+    List<Article> findAllByCreationDateBetweenOrderByHitDescCreationDateDesc(Instant before, Instant after);
+
     List<Article> findAllByOrderByCreationDateDesc();
 
     List<Article> findAllByUserOrderByCreationDateDesc(Account account);

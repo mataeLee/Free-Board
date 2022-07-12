@@ -11,8 +11,7 @@
             </div>
             <div class="card-body">
                 <div class="dataTable-wrapper dataTable-loading no-footer sortable searchable fixed-columns">
-                    <div class="dataTable-top">
-                    </div>
+                    <div class="dataTable-top"></div>
                     <div class="dataTable-container">
                         <table id="datatablesSimple" class="dataTable-table">
                             <thead>
@@ -25,8 +24,8 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr th:each="article, it : ${articles}" th:onclick="|location.href='@{/articles/{id}(id = ${article.id})}'|">
-                                <td><span th:text="${it.index+1}"></span></td>
+                            <tr class="clickable-row" th:each="article, it : ${articles}" th:onclick="|location.href='@{/articles/{id}(id = ${article.id})}'|">
+                                <td><span th:text="${article.num}"></span></td>
                                 <td><span th:text="${article.title}"></span></td>
                                 <td><span th:text="${article.hit}"></span></td>
                                 <td><span th:text="${article.username}"></span></td>
@@ -64,5 +63,7 @@
 </div>
 <th:block layout:fragment="script">
     <script src="/js/datatables-simple-demo.js"></script>
+    <script>
+    </script>
 </th:block>
 </html>

@@ -55,7 +55,7 @@ public class ArticleService {
 
         Instant before = Instant.now().minus(1, ChronoUnit.DAYS);
         Instant after = Instant.now();
-        List<Article> articles = articleRepository.findAllByCreationDateBetweenOrderByCreationDateDesc(before, after);
+        List<Article> articles = articleRepository.findAllByCreationDateBetweenOrderByHitDescCreationDateDesc(before, after);
         List<Article> list;
 
         if(articles.size() < startItem){
@@ -67,8 +67,10 @@ public class ArticleService {
         }
 
         List<ArticleSummaryDTO> res = new ArrayList<>();
-        for (Article article : list) {
-            res.add(ArticleFormatter.toSummaryDTO(article));
+        for (int i=0; i<list.size(); i++){
+            ArticleSummaryDTO dto = ArticleFormatter.toSummaryDTO(list.get(i));
+            dto.setNum(i+1);
+            res.add(dto);
         }
 
         Page<ArticleSummaryDTO> articlePage = new PageImpl<>(res, PageRequest.of(currentPage, pageSize), articles.size());
@@ -92,8 +94,10 @@ public class ArticleService {
         }
 
         List<ArticleSummaryDTO> res = new ArrayList<>();
-        for (Article article : list) {
-            res.add(ArticleFormatter.toSummaryDTO(article));
+        for (int i=0; i<list.size(); i++){
+            ArticleSummaryDTO dto = ArticleFormatter.toSummaryDTO(list.get(i));
+            dto.setNum(i+1);
+            res.add(dto);
         }
 
         Page<ArticleSummaryDTO> articlePage = new PageImpl<>(res, PageRequest.of(currentPage, pageSize), articles.size());
@@ -117,8 +121,10 @@ public class ArticleService {
         }
 
         List<ArticleSummaryDTO> res = new ArrayList<>();
-        for (Article article : list) {
-            res.add(ArticleFormatter.toSummaryDTO(article));
+        for (int i=0; i<list.size(); i++){
+            ArticleSummaryDTO dto = ArticleFormatter.toSummaryDTO(list.get(i));
+            dto.setNum(i+1);
+            res.add(dto);
         }
 
         Page<ArticleSummaryDTO> articlePage = new PageImpl<>(res, PageRequest.of(currentPage, pageSize), articles.size());
@@ -130,16 +136,6 @@ public class ArticleService {
         if (Objects.isNull(article)) throw new NullPointerException("article not found");
 
         return ArticleFormatter.toDetailDTO(article);
-    }
-
-    public List<ArticleSummaryDTO> findAllByAccount(Account account) {
-        List<Article> articles = articleRepository.findAllByUserOrderByCreationDateDesc(account);
-        List<ArticleSummaryDTO> res = new ArrayList<>();
-
-        for (Article article : articles) {
-            res.add(ArticleFormatter.toSummaryDTO(article));
-        }
-        return res;
     }
 
     public void delete(Long id) {

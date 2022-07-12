@@ -61,12 +61,18 @@
   height: 20px !important;
 }
 
-.comment-element {
+.comment-element-left {
+  float: left;
+  display: inline;
+}
+
+.comment-element-right {
   float: right;
   display: inline;
 }
 
-.comment-header > div:first-child .comment-header > img:first-child {
+.comment-header > div:first-child,
+.comment-header > img:first-child {
   float: left !important;
 }
 
@@ -94,12 +100,18 @@
   height: 60px !important;
 }
 
-.article-element {
+.article-element-right {
   float: right;
   display: inline;
 }
 
-.article-header > div:first-child .article-header > img:first-child {
+.article-element-left {
+  float: left;
+  display: inline;
+}
+
+.article-header > div:first-child,
+.article-header > img:first-child {
   float: left !important;
 }
 
@@ -170,6 +182,10 @@
 .error-msg {
   color: red;
   font-size: small;
+}
+
+.clickable-row {
+  cursor: pointer !important;
 }
 
 /*# sourceMappingURL=app.css.map */

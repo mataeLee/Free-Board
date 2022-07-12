@@ -9,16 +9,16 @@
         <div class="card mb-4">
             <div class="card-header">
                 <span th:text="${articleDetail.title}"></span>
-                <form class="article-element"
+                <form class="article-element-right"
                       th:if="${#authentication.getName()} == ${articleDetail.username}"
                       th:action="@{/articles/{id} (id=${articleDetail.id})}" th:method="delete">
                     <input type="hidden" name="_method" value="delete">
                     <button type="submit" class="manage-btn">삭제
                     </button>
                 </form>
-                <form class="article-element"
+                <form class="article-element-right"
                       th:if="${#authentication.getName()} == ${articleDetail.username}"
-                      th:action="@{/articles/put/{id} (id=${articleDetail.id})}" th:method="get">
+                      th:action="@{/articles/{id}/edit (id=${articleDetail.id})}" th:method="get">
                     <button type="submit" class="manage-btn">수정
                     </button>
                 </form>
@@ -27,9 +27,9 @@
                 <div class="article-box">
                     <div class="article-header">
                         <img class="article-profile-img" th:src="@{'/'+${articleDetail.getUserprofile()}}"/>
-                        <div class="article-element"><span th:text="${articleDetail.username}"></span></div>
-                        <div class="article-element">작성일 : <span th:text="${articleDetail.creationDate}"></span></div>
-                        <div class="article-element">마지막 수정일 : <span th:text="${articleDetail.updateDate}"></span>&nbsp;&nbsp;&nbsp;</div>
+                        <div class="article-element-left"><span th:text="${articleDetail.username}"></span></div>
+                        <div class="article-element-right">작성일 : <span th:text="${articleDetail.creationDate}"></span></div>
+                        <div class="article-element-right">마지막 수정일 : <span th:text="${articleDetail.updateDate}"></span>&nbsp;&nbsp;&nbsp;</div>
                     </div>
                     <hr class="one">
                     <div class="article-body">
@@ -51,12 +51,12 @@
         <div class="comment-box" th:each="comment : ${articleDetail.comments}">
             <div class="comment-header">
                 <img class="comment-profile-img" th:src="@{'/'+${comment.getUserprofile()}}"/>
-                <div class="comment-element"><span th:text="${comment.username}"></span></div>
-                <div class="comment-element"><span th:text="${comment.creationDate}"></span></div>
+                <div class="comment-element-left"><span th:text="${comment.username}"></span></div>
+                <div class="comment-element-right"><span th:text="${comment.creationDate}"></span></div>
             </div>
             <div class="comment-body">
                 <span th:text="${comment.content}"></span>
-                <form class="comment-element"
+                <form class="comment-element-right"
                       th:if="${#authentication.getName()} == ${comment.username}"
                       th:action="@{/comments/{id}/{articleId} (id=${comment.id}, articleId=${articleDetail.id})}"
                       th:method="delete">
