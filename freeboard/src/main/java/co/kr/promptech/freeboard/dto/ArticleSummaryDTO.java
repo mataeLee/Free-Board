@@ -16,16 +16,18 @@ public class ArticleSummaryDTO {
     private String title;
     private String summary;
     private String username;
+    private String thumbnail;
     private int hit;
     private String creationDate;
 
     @Builder
-    public ArticleSummaryDTO(Long id, int num, String title, String summary, String username, int hit, String creationDate) {
+    public ArticleSummaryDTO(Long id, int num, String title, String summary, String username, String thumbnail, int hit, String creationDate) {
         this.id = id;
         this.num = num;
         this.title = title;
         this.summary = summary;
         this.username = username;
+        this.thumbnail = thumbnail;
         this.hit = hit;
         this.creationDate = creationDate;
     }

@@ -22,9 +22,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import java.security.Principal;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 @Controller
 @RequestMapping("/articles")
@@ -34,9 +32,14 @@ public class ArticleController {
     private final ArticleService articleService;
 
     @GetMapping("")
-    public String index(Model model, @PageableDefault(size = 8, page = 1, sort = "creationDate", direction = Sort.Direction.DESC) Pageable pageable) {
+    public String index() {
+        return "app/home/index";
+    }
 
-        logger.info("size : " + pageable.getPageSize() + ", page : " + pageable.getPageNumber());
+    @GetMapping("/scroll")
+    @ResponseBody
+    public Map<String, Object> more(@PageableDefault(size = 12, page = 0, sort = "creationDate", direction = Sort.Direction.DESC) Pageable pageable){
+        logger.info("scroll size : " + pageable.getPageSize() + ", page : " + pageable.getPageNumber());
         Slice<Article> entities = articleService.findAll(pageable);
         logger.info("content size : " + entities.getContent().size());
 
@@ -46,11 +49,9 @@ public class ArticleController {
         for(Article article: list){
             articles.add(ArticleFormatter.toSummaryDTO(article));
         }
-
-        model.addAttribute("articles", articles);
-
-        model.addAttribute("tableTitle", "Articles News");
-        return "app/home/index";
+        Map<String, Object> resultMap = new HashMap<>();
+        resultMap.put("articles", articles);
+        return resultMap;
     }
 
     @PostMapping()
@@ -60,7 +61,7 @@ public class ArticleController {
         }
         Account account = (Account) httpSession.getAttribute("account_" + principal.getName());
         articleService.save(articleDetailDTO, account);
-        return "redirect:/articles/news";
+        return "redirect:/articles";
     }
 
     @GetMapping("/new")

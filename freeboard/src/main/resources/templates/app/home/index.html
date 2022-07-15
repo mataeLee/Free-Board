@@ -6,56 +6,101 @@
 <div layout:fragment="content">
     <div class="container px-md-5">
         <div class="py-md-5">
-            <nav class="navbar mb-2 mx-md-2 d-flex flex-row">
-                <a class="p-2 nav-link">
+            <nav class="navbar mb-2 mx-md-2">
+                <a class="nav-link">
                     최신순
                 </a>
-                <a class="p-2 nav-link">
+                <a class="nav-link">
                     조회순
                 </a>
-                <select class="p-2 nav-link">
+                <select class="nav-link">
                     <option value="오늘">오늘</option>
                     <option value="오늘">이번 주</option>
                     <option value="오늘">이번 달</option>
                     <option value="오늘">올해</option>
                 </select>
             </nav>
-            <main class="article-grid">
-                <div class="card article-card m-md-2 shadow-lg" th:each="article : ${articles}"
-                     th:onclick="|location.href='@{/articles/{id}(id = ${article.id})}'|">
-                    <img th:if="${article.num != 0}" class="article-thumbnail" src=""/>
-                    <div class="card-body">
-                        <h6 th:utext="${article.title}"></h6>
-                        <p class="article-p">본문내용</p>
+            <div class="article-grid" id="article-grid">
+                <div class="card article-card m-md-2 shadow-lg" id="article-card" hidden>
+                    <img class="article-thumbnail" id="article-thumbnail" src=""/>
+                    <div class="card-body" id="article-body">
+                        <h6 id="article-title">제목</h6>
+                        <p class="article-summary" id="article-summary">요약내용</p>
                     </div>
-                    <div class="card-footer" th:text="${article.num}">
+                    <div class="card-footer" id="article-footer">
+                        footer
                     </div>
                 </div>
-            </main>
+            </div>
         </div>
     </div>
 </div>
 <th:block layout:fragment="script">
     <script>
-        var page = 1;
+        let articleTemplate = ""
+        let page = 0
+        let pageSize = 12
+        let hasNextArticles = true
+
+        window.onload = function (e){
+            appendArticlesAll(page)
+            articleTemplate = document.getElementById("article-card")
+            page++
+        }
 
         window.onscroll = function (e) {
-            if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
-                page++
-                $.ajax({
-                    type: "GET",
-                    url: "/articles",
-                    data: {'page': page},
-                    success: function (doc){
-                        console.log('scroll req success page : ' + page)
-                        appendArticles(doc)
-                    }
-                })
+            if(hasNextArticles) {
+                if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
+                    appendArticlesAll(page)
+                    page++
+                }
             }
         };
 
-        function appendArticles(articles){
+        // create article
+        function createArticle(article){
+            const articleCard = articleTemplate.cloneNode(true)
+            articleCard.hidden = false
+            // article card onclick event listener
+            articleCard.onclick = () => {
+                location.href= window.location.pathname + '/' + article.id
+            }
 
+            // article card childs
+            const articleThumbnail = articleCard.querySelector("#article-thumbnail")
+            // articleThumbnail.src = '/profiles/thumbnail.jpeg'
+            articleThumbnail.src = article.thumbnail
+
+            const articleTitle = articleCard.querySelector("#article-title")
+            articleTitle.innerHTML = article.title
+
+            const articleSummary = articleCard.querySelector("#article-summary")
+            articleSummary.innerHTML = article.summary
+
+            return articleCard
+        }
+
+        function appendArticlesAll(page){
+            $.ajax({
+                type: "GET",
+                url: window.location.pathname + '/scroll',
+                dataType: "json",
+                data: {'page': page},
+                success: function (resultMap) {
+                    console.log('scroll req path: ' + window.location.pathname + ' success! page is: ' + page)
+                    const articleGrid = document.getElementById("article-grid")
+
+                    const articles = resultMap.articles
+                    for (let article of articles) {
+                        // article card init attributes
+                        const articleCard = createArticle(article)
+                        // article grid add article card
+                        articleGrid.appendChild(articleCard)
+                    }
+                    if(articles.length < pageSize) hasNextArticles = false
+                    else hasNextArticles = true
+                }
+            })
         }
     </script>
 </th:block>

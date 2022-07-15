@@ -12,6 +12,8 @@ public class ArticleFormatter {
                     .id(article.getId())
                     .title(article.getTitle())
                     .username(article.getUser().getUsername())
+                    .summary(article.getSummary())
+                    .thumbnail(article.getThumbnail())
                     .hit(article.getHit())
                     .creationDate(InstantFormatter.formatString(article.getCreationDate()))
                     .build();
@@ -30,6 +32,7 @@ public class ArticleFormatter {
                     .username(article.getUser().getUsername())
                     .userprofile(article.getUser().getProfileImage())
                     .hit(article.getHit())
+                    .comments(CommentFormatter.toDTOList(article.getComments()))
                     .creationDate(InstantFormatter.formatString(article.getCreationDate()))
                     .updateDate(InstantFormatter.formatString(article.getUpateDate()))
                     .build();

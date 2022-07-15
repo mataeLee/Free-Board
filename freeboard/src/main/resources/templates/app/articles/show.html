@@ -7,7 +7,7 @@
 <div layout:fragment="content">
     <div class="container px-md-5">
         <div class="py-md-5">
-            <div class="card">
+            <div class="card mb-3">
                 <div class="card-header navbar">
                     <div>
                         <span th:text="${articleDetail.title}"></span>
@@ -48,8 +48,8 @@
                     </div>
                 </div>
             </div>
-            <form class="mt-3" th:action="@{/comments/{articleId} (articleId = ${articleDetail.id})}" th:method="post"
-                  sec:authorize="isAuthenticated()" th:object="${comment}">
+            <form th:action="@{/comments/{articleId} (articleId = ${articleDetail.id})}" th:method="post"
+                  th:object="${comment}">
                 <div class="input-group">
                     <input class="form-control" maxlength="100" id="content" type="text" name="content"
                            placeholder="댓글을 남겨주세요 (최대 100자)" th:field="*{content}" required>

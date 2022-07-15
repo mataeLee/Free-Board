@@ -24,7 +24,7 @@ public class ArticleDetailDTO {
     private List<CommentDTO> comments;
 
     @Builder
-    public ArticleDetailDTO(Long id, String title, String summary, String content, String username, String userprofile, int hit, String creationDate, String updateDate) {
+    public ArticleDetailDTO(Long id, String title, String summary, String content, String username, String userprofile, int hit, String creationDate, String updateDate, List<CommentDTO> comments) {
         this.id = id;
         this.title = title;
         this.summary = summary;
@@ -34,5 +34,6 @@ public class ArticleDetailDTO {
         this.hit = hit;
         this.creationDate = creationDate;
         this.updateDate = updateDate;
+        this.comments = comments;
     }
 }

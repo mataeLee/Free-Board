@@ -31,6 +31,9 @@ public class CommentController {
 
     @PostMapping("/{articleId}")
     public String post(CommentDTO commentDTO, HttpSession httpSession, Principal principal) {
+        if(principal == null){
+            return "app/articles/show";
+        }
         Account account = (Account) httpSession.getAttribute("account_" + principal.getName());
         Article article = (Article) httpSession.getAttribute("article_" + commentDTO.getArticleId());
         commentService.save(commentDTO, account, article);

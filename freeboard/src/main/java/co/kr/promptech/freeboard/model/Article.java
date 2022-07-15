@@ -30,6 +30,9 @@ public class Article {
     private String summary;
 
     @Column
+    private String thumbnail;
+
+    @Column
     @ColumnDefault("0")
     private int hit;
 
