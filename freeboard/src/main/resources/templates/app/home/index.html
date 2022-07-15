@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:layout="http://www.ultraq/net/nz/thymleaf/layout"
+      xmlns:th="http://www.thymeleaf.org"
+      layout:decorate="~{layouts/app.html}">
+<div layout:fragment="content">
+    <div class="container px-md-5">
+        <div class="py-md-5">
+            <nav class="navbar mb-2 mx-md-2 d-flex flex-row">
+                <a class="p-2 nav-link">
+                    최신순
+                </a>
+                <a class="p-2 nav-link">
+                    조회순
+                </a>
+                <select class="p-2 nav-link">
+                    <option value="오늘">오늘</option>
+                    <option value="오늘">이번 주</option>
+                    <option value="오늘">이번 달</option>
+                    <option value="오늘">올해</option>
+                </select>
+            </nav>
+            <main class="article-grid">
+                <div class="card article-card m-md-2 shadow-lg" th:each="article : ${articles}"
+                     th:onclick="|location.href='@{/articles/{id}(id = ${article.id})}'|">
+                    <img th:if="${article.num != 0}" class="article-thumbnail" src=""/>
+                    <div class="card-body">
+                        <h6 th:utext="${article.title}"></h6>
+                        <p class="article-p">본문내용</p>
+                    </div>
+                    <div class="card-footer" th:text="${article.num}">
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+</div>
+<th:block layout:fragment="script">
+    <script>
+        var page = 1;
+
+        window.onscroll = function (e) {
+            if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
+                page++
+                $.ajax({
+                    type: "GET",
+                    url: "/articles",
+                    data: {'page': page},
+                    success: function (doc){
+                        console.log('scroll req success page : ' + page)
+                        appendArticles(doc)
+                    }
+                })
+            }
+        };
+
+        function appendArticles(articles){
+
+        }
+    </script>
+</th:block>
+</html>

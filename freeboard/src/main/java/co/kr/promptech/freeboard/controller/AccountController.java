@@ -37,13 +37,13 @@ public class AccountController {
 
     @GetMapping("/login")
     public String login(){
-        return "pages/accounts/login";
+        return "app/accounts/login";
     }
 
     @GetMapping("/signup")
     public String signupForm(Model model){
         model.addAttribute("accountDTO", new AccountDTO());
-        return "pages/accounts/new";
+        return "app/accounts/new";
     }
 
     @PostMapping("/signup")
@@ -53,7 +53,7 @@ public class AccountController {
             result.rejectValue("username", "error.username", "Username already in use");
         }
         if(result.hasErrors()){
-            return "pages/accounts/new";
+            return "app/accounts/new";
         }
         accountService.save(accountDTO);
         return "redirect:/login";
@@ -66,9 +66,9 @@ public class AccountController {
             model.addAttribute("account", account);
         }catch (Exception e){
             e.printStackTrace();
-            return "pages/index";
+            return "app/index";
         }
-        return "pages/accounts/show";
+        return "app/accounts/show";
     }
 
     @GetMapping("/accounts/articles")
@@ -88,9 +88,9 @@ public class AccountController {
             }
         }catch (Exception e){
             e.printStackTrace();
-            return "pages/index";
+            return "app/index";
         }
-        return "pages/accounts/articles";
+        return "app/accounts/articles";
     }
 
     @GetMapping("/accounts/comments")
@@ -110,9 +110,9 @@ public class AccountController {
             }
         }catch (Exception e){
             e.printStackTrace();
-            return "pages/index";
+            return "app/index";
         }
-        return "pages/accounts/comments";
+        return "app/accounts/comments";
     }
 
     @PutMapping("/accounts")
@@ -123,7 +123,7 @@ public class AccountController {
 
         }catch (Exception e){
             e.printStackTrace();
-            return "pages/index";
+            return "app/index";
         }
 
         return "redirect:/accounts";
@@ -136,7 +136,7 @@ public class AccountController {
             accountService.updateProfileImage(account, profile);
         }catch (Exception e){
             e.printStackTrace();
-            return "pages/index";
+            return "app/index";
         }
         return "redirect:/accounts";
     }

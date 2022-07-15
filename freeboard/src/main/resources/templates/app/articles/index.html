@@ -11,7 +11,8 @@
             </div>
             <div class="card-body">
                 <div class="dataTable-wrapper dataTable-loading no-footer sortable searchable fixed-columns">
-                    <div class="dataTable-top"></div>
+                    <div class="dataTable-top">
+                    </div>
                     <div class="dataTable-container">
                         <table id="datatablesSimple" class="dataTable-table">
                             <thead>
@@ -36,7 +37,7 @@
                     </div>
                     <div class="dataTable-bottom">
                         <div class="dataTable-dropdown">
-                            <select class="dataTable-selector" th:onchange="'window.location.href = \'' + @{/articles/news} + '?size=\' + this.value '">
+                            <select class="dataTable-selector" th:onchange="'window.location.href = \'' + @{/articles} + '?size=\' + this.value '">
                                 <option value="5" th:selected="${articles.size} == 5">5</option>
                                 <option value="10" th:selected="${articles.size} == 10">10</option>
                                 <option value="15" th:selected="${articles.size} == 15">15</option>
@@ -48,7 +49,7 @@
                                 <li class="dataTable-pagination" th:if="${articles.totalPages > 0}"
                                     th:each="pageNums : ${pageNums}"
                                     th:class="${pageNums==articles.number + 1} ? active">
-                                    <a th:href="@{/articles/news(page=${pageNums}, size=${articles.size})}"
+                                    <a th:href="@{/articles(page=${pageNums}, size=${articles.size})}"
                                        th:text="${pageNums}"></a>
                             </ul>
                         </nav>
@@ -63,7 +64,6 @@
 </div>
 <th:block layout:fragment="script">
     <script src="/js/datatables-simple-demo.js"></script>
-    <script>
-    </script>
+    <script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
 </th:block>
 </html>

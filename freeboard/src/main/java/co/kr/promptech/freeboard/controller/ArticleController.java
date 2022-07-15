@@ -6,11 +6,14 @@ import co.kr.promptech.freeboard.dto.CommentDTO;
 import co.kr.promptech.freeboard.model.Account;
 import co.kr.promptech.freeboard.model.Article;
 import co.kr.promptech.freeboard.service.ArticleService;
-import co.kr.promptech.freeboard.service.CommentService;
+import co.kr.promptech.freeboard.util.ArticleFormatter;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -19,60 +22,41 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import java.security.Principal;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 @Controller
 @RequestMapping("/articles")
 @RequiredArgsConstructor
 public class ArticleController {
+    private Logger logger = LoggerFactory.getLogger(ArticleController.class);
     private final ArticleService articleService;
 
-    private final CommentService commentService;
+    @GetMapping("")
+    public String index(Model model, @PageableDefault(size = 8, page = 1, sort = "creationDate", direction = Sort.Direction.DESC) Pageable pageable) {
 
-    @GetMapping()
-    public String index(Model model, @RequestParam("page") Optional<Integer> page, @RequestParam("size") Optional<Integer> size) {
-        int currentPage = page.orElse(1);
-        int pageSize = size.orElse(5);
+        logger.info("size : " + pageable.getPageSize() + ", page : " + pageable.getPageNumber());
+        Slice<Article> entities = articleService.findAll(pageable);
+        logger.info("content size : " + entities.getContent().size());
 
-        Pageable pageable = PageRequest.of(currentPage-1, pageSize);
-        Page<ArticleSummaryDTO> articlePage = articleService.findAllByPaginated(pageable);
-        model.addAttribute("articles", articlePage);
-        int totalPages = articlePage.getTotalPages();
-        if(totalPages > 0) {
-            List<Integer> pageNums = IntStream.rangeClosed(1, totalPages).boxed().collect(Collectors.toList());
-            model.addAttribute("pageNums", pageNums);
+        List<Article> list = entities.getContent();
+        List<ArticleSummaryDTO> articles = new ArrayList<>();
+
+        for(Article article: list){
+            articles.add(ArticleFormatter.toSummaryDTO(article));
         }
 
-        model.addAttribute("tableTitle", "Articles");
-        return "pages/articles/index";
-    }
+        model.addAttribute("articles", articles);
 
-    @GetMapping("/news")
-    public String indexNews(Model model, @RequestParam("page") Optional<Integer> page, @RequestParam("size") Optional<Integer> size) {
-        int currentPage = page.orElse(1);
-        int pageSize = size.orElse(5);
-
-        Pageable pageable = PageRequest.of(currentPage-1, pageSize);
-        Page<ArticleSummaryDTO> articlePage = articleService.findNewsByPaginated(pageable);
-
-        model.addAttribute("articles", articlePage);
-
-        int totalPages = articlePage.getTotalPages();
-        if(totalPages > 0) {
-            List<Integer> pageNums = IntStream.rangeClosed(1, totalPages).boxed().collect(Collectors.toList());
-            model.addAttribute("pageNums", pageNums);
-        }
         model.addAttribute("tableTitle", "Articles News");
-        return "pages/index";
+        return "app/home/index";
     }
 
     @PostMapping()
     public String post(@ModelAttribute("articleDetail") @Validated ArticleDetailDTO articleDetailDTO, BindingResult result, HttpSession httpSession, Principal principal) {
         if(result.hasErrors()){
-            return "pages/articles/new";
+            return "app/articles/new";
         }
         Account account = (Account) httpSession.getAttribute("account_" + principal.getName());
         articleService.save(articleDetailDTO, account);
@@ -82,23 +66,17 @@ public class ArticleController {
     @GetMapping("/new")
     public String postForm(Model model) {
         model.addAttribute("articleDetail", new ArticleDetailDTO());
-        return "pages/articles/new";
+        return "app/articles/new";
     }
 
     @GetMapping("/{id}")
-    public String show(@PathVariable("id") Long id, Model model, HttpSession httpSession) {
-        Article article = articleService.findById(id);
+    public String show(@PathVariable("id") Long id, Model model) {
         //TODO spring cache 이용하여 조회수 조절
         articleService.addHit(id);
-        List<CommentDTO> comments = commentService.findByArticle(article);
-
         ArticleDetailDTO articleDetailDTO = articleService.findArticleDetailDTOById(id);
-        articleDetailDTO.setComments(comments);
         model.addAttribute("articleDetail", articleDetailDTO);
         model.addAttribute("comment", new CommentDTO());
-
-        httpSession.setAttribute("article_" + article.getId(), article);
-        return "pages/articles/show";
+        return "app/articles/show";
     }
 
     @DeleteMapping("/{id}")
@@ -111,13 +89,13 @@ public class ArticleController {
     public String updateForm(@PathVariable Long id, Model model) {
         ArticleDetailDTO articleDetailDTO = articleService.findArticleDetailDTOById(id);
         model.addAttribute("articleDetail", articleDetailDTO);
-        return "pages/articles/put";
+        return "app/articles/new";
     }
 
     @PutMapping()
     public String update(@ModelAttribute("articleDetail") @Validated ArticleDetailDTO articleDetail, BindingResult result, HttpSession httpSession, Principal principal) {
         if(result.hasErrors()){
-            return "pages/articles/put";
+            return "app/articles/new";
         }
         Account account = (Account) httpSession.getAttribute("account_" + principal.getName());
         articleService.save(articleDetail, account);
