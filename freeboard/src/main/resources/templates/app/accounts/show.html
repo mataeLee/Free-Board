@@ -11,10 +11,12 @@
             </div>
             <div class="card-body">
                 <div> Profile <img id="profile" class="profile-img" th:src="@{${account.getProfileImage()}}"/><br>
-                    <form th:method="put" enctype="multipart/form-data" th:action="@{/accounts/profileImage}" onchange="showbutton()">
+                    <form th:method="put" enctype="multipart/form-data" th:action="@{/accounts/profileImage}"
+                          onchange="showbutton()">
                         <input type="hidden" name="_method" value="put">
                         <input type="file" name="profile" id="file">
-                        <button id="fileSubmit" class="btn btn-primary" type="submit" hidden onclick="loadImg()">완료</button>
+                        <button id="fileSubmit" class="btn btn-primary" type="submit" hidden th:onclick="loadImg()">완료
+                        </button>
                     </form>
                 </div>
             </div>
@@ -23,14 +25,9 @@
 </div>
 <th:block layout:fragment="script">
     <script>
-        function showbutton(){
+        function showbutton() {
             var btn = document.getElementById("fileSubmit")
             btn.hidden = false
-        }
-        function loadImg(){
-            var img = document.getElementById("profile")
-            var url = img.attr("src")
-            img.removeAttribute("src").attr("src", url)
         }
     </script>
 </th:block>
