@@ -7,38 +7,25 @@
 }
 
 .btn-primary {
-  color: #f5c2c7 !important;
+  color: #ffe9f4 !important;
   background-color: #1a1e21 !important;
-  border-color: #f5c2c7 !important;
+  border-color: #ffe9f4 !important;
   border-width: 3px !important;
 }
 
 .dataTable-pagination a {
-  color: #f5c2c7 !important;
+  color: #ffe9f4 !important;
   background-color: #1a1e21 !important;
-  border-color: #f5c2c7 !important;
+  border-color: #ffe9f4 !important;
   border-width: 3px !important;
 }
 
 .card-header {
-  background-color: #f8d7da !important;
-  border-top: 3px solid #1a1e21;
-  border-left: 3px solid #1a1e21;
-  border-right: 3px solid #1a1e21;
-}
-
-.card-body {
-  border-top: 3px solid #1a1e21;
-  border-bottom: 3px solid #1a1e21;
-  border-left: 3px solid #1a1e21;
-  border-right: 3px solid #1a1e21;
+  background-color: #ffe9f4 !important;
 }
 
 .card-footer {
-  background-color: #f8d7da !important;
-  border-bottom: 3px solid #1a1e21;
-  border-left: 3px solid #1a1e21;
-  border-right: 3px solid #1a1e21;
+  background-color: #ffe9f4 !important;
 }
 
 .comment-box {
@@ -129,6 +116,30 @@
   height: 32px !important;
 }
 
+.article-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, auto));
+  grid-gap: 10px;
+  align-items: stretch;
+}
+
+.article-nav {
+  height: 50px;
+}
+
+.article-thumbnail {
+  height: 150px;
+}
+
+.article-p {
+  font: 15px sans-serif;
+}
+
+.article-card {
+  cursor: pointer;
+  height: 330px;
+}
+
 .manage-btn {
   border: 0;
   background-color: transparent;
@@ -148,7 +159,26 @@
   background-color: transparent;
   border: 0;
   transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out;
-  margin-right: 10px;
+}
+
+.note-btn.dropdown-toggle:after {
+  content: none;
+}
+
+.navbar-brand {
+  color: #ffe0e5;
+}
+
+.nav-link {
+  color: #ffe0e5 !important;
+}
+
+a:hover {
+  cursor: pointer;
+}
+
+.ptb-topnav {
+  background-color: #1a1e21;
 }
 
 .sb-topnav {
@@ -157,20 +187,12 @@
   border-width: 5px !important;
 }
 
-.a:link {
-  color: #1a1e21 !important;
-}
-
 .sb-sidenav-menu {
   background-color: #f8d7da !important;
   padding-top: 20px !important;
   border-left: 3px solid #1a1e21;
   border-right: 3px solid #1a1e21;
   border-bottom: 3px solid #1a1e21;
-}
-
-.nav-link {
-  color: #1a1e21 !important;
 }
 
 .sb-topnav .navbar-brand {
@@ -182,10 +204,6 @@
 .error-msg {
   color: red;
   font-size: small;
-}
-
-.clickable-row {
-  cursor: pointer !important;
 }
 
 /*# sourceMappingURL=app.css.map */
