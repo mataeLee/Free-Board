@@ -33,8 +33,7 @@ public class Comment {
     @ColumnDefault("0")
     private Account user;
 
-    @ManyToOne(targetEntity = Article.class, fetch = FetchType.LAZY)
-    @OnDelete(action = OnDeleteAction.CASCADE)
+    @ManyToOne()
     @JoinColumn(name = "article_id")
     private Article article;
 

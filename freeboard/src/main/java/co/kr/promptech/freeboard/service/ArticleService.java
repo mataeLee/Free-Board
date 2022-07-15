@@ -9,12 +9,10 @@ import co.kr.promptech.freeboard.util.ArticleFormatter;
 import co.kr.promptech.freeboard.util.InstantFormatter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
@@ -28,6 +26,7 @@ public class ArticleService {
         articleRepository.save(article);
     }
 
+    @Transactional
     public void save(ArticleDetailDTO articleDetail, Account account) {
         Article article = null;
         if (articleDetail.getId() != null) article = articleRepository.findById(articleDetail.getId()).orElse(null);
@@ -149,5 +148,23 @@ public class ArticleService {
         Article article = articleRepository.findById(id).orElse(null);
         if (Objects.isNull(article)) throw new NullPointerException("article not found");
         return article;
+    }
+
+    public List<ArticleSummaryDTO> findAllByNews() {
+        Instant before = Instant.now().minus(1, ChronoUnit.DAYS);
+        Instant after = Instant.now();
+
+        List<Article> articles = articleRepository.findAllByCreationDateBetweenOrderByHitDescCreationDateDesc(before, after);
+        List<ArticleSummaryDTO> res = new ArrayList<>();
+        for (int i=0; i<articles.size(); i++){
+            ArticleSummaryDTO dto = ArticleFormatter.toSummaryDTO(articles.get(i));
+            dto.setNum(i);
+            res.add(dto);
+        }
+        return res;
+    }
+
+    public Slice<Article> findAll(Pageable pageable) {
+        return articleRepository.findAll(pageable);
     }
 }

@@ -2,6 +2,9 @@ package co.kr.promptech.freeboard.repository;
 
 import co.kr.promptech.freeboard.model.Account;
 import co.kr.promptech.freeboard.model.Article;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
+import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
@@ -9,6 +12,7 @@ import org.springframework.data.repository.CrudRepository;
 import javax.transaction.Transactional;
 import java.time.Instant;
 import java.util.List;
+import java.util.Optional;
 
 public interface ArticleRepository extends CrudRepository<Article, Long> {
 
@@ -24,4 +28,10 @@ public interface ArticleRepository extends CrudRepository<Article, Long> {
     List<Article> findAllByOrderByCreationDateDesc();
 
     List<Article> findAllByUserOrderByCreationDateDesc(Account account);
+
+    @EntityGraph(attributePaths = {"comments", "user"})
+    Optional<Article> findById(Long id);
+
+    @EntityGraph(attributePaths = {"user"})
+    Slice<Article> findAll(Pageable pageable);
 }

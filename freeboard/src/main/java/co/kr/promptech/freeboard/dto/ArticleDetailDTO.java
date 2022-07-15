@@ -13,6 +13,7 @@ import java.util.List;
 public class ArticleDetailDTO {
     private Long id;
     private String title;
+    private String summary;
     private String content;
     private String username;
     private String userprofile;
@@ -21,10 +22,12 @@ public class ArticleDetailDTO {
     private String updateDate;
 
     private List<CommentDTO> comments;
+
     @Builder
-    public ArticleDetailDTO(Long id, String title, String content, String username, String userprofile, int hit, String creationDate, String updateDate) {
+    public ArticleDetailDTO(Long id, String title, String summary, String content, String username, String userprofile, int hit, String creationDate, String updateDate) {
         this.id = id;
         this.title = title;
+        this.summary = summary;
         this.content = content;
         this.username = username;
         this.userprofile = userprofile;
