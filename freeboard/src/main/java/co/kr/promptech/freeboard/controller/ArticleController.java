@@ -38,7 +38,7 @@ public class ArticleController {
 
     @GetMapping("/scroll")
     @ResponseBody
-    public Map<String, Object> more(@PageableDefault(size = 12, page = 0, sort = "creationDate", direction = Sort.Direction.DESC) Pageable pageable){
+    public Map<String, Object> scroll(@PageableDefault(size = 12, page = 0, sort = "creationDate", direction = Sort.Direction.DESC) Pageable pageable){
         logger.info("scroll size : " + pageable.getPageSize() + ", page : " + pageable.getPageNumber());
         Slice<Article> entities = articleService.findAll(pageable);
         logger.info("content size : " + entities.getContent().size());

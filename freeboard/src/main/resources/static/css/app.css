@@ -140,6 +140,10 @@
   height: 330px;
 }
 
+.article-card:hover {
+  border-color: #0a53be;
+}
+
 .manage-btn {
   border: 0;
   background-color: transparent;
@@ -161,6 +165,10 @@
   transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out;
 }
 
+.auth-btn:hover {
+  color: #0a53be !important;
+}
+
 .note-btn.dropdown-toggle:after {
   content: none;
 }
@@ -170,11 +178,7 @@
 }
 
 .nav-link {
-  color: #ffe0e5 !important;
-}
-
-a:hover {
-  cursor: pointer;
+  color: #ffe0e5;
 }
 
 .ptb-topnav {
