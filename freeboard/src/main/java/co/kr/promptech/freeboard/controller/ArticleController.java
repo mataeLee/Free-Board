@@ -38,17 +38,17 @@ public class ArticleController {
 
     @GetMapping("/scroll")
     @ResponseBody
-    public Map<String, Object> scroll(@PageableDefault(size = 12, page = 0, sort = "creationDate", direction = Sort.Direction.DESC) Pageable pageable){
+    public Map<String, Object> scroll(@PageableDefault(size = 9, page = 0, sort = "creationDate", direction = Sort.Direction.DESC) Pageable pageable){
         logger.info("scroll size : " + pageable.getPageSize() + ", page : " + pageable.getPageNumber());
-        Slice<Article> entities = articleService.findAll(pageable);
+        Slice<Article> entities = articleService.findSliceBy(pageable);
         logger.info("content size : " + entities.getContent().size());
 
-        List<Article> list = entities.getContent();
         List<ArticleSummaryDTO> articles = new ArrayList<>();
 
-        for(Article article: list){
+        for(Article article: entities){
             articles.add(ArticleFormatter.toSummaryDTO(article));
         }
+
         Map<String, Object> resultMap = new HashMap<>();
         resultMap.put("articles", articles);
         return resultMap;

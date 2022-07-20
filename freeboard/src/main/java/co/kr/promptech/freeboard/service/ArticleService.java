@@ -164,7 +164,7 @@ public class ArticleService {
         return res;
     }
 
-    public Slice<Article> findAll(Pageable pageable) {
-        return articleRepository.findAll(pageable);
+    public Slice<Article> findSliceBy(Pageable pageable) {
+        return articleRepository.findSliceBy(pageable);
     }
 }
