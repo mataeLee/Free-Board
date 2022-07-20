@@ -118,7 +118,7 @@
 
 .article-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(250px, auto));
+  grid-template-columns: repeat(auto-fill, minmax(350px, auto));
   grid-gap: 10px;
   align-items: stretch;
 }
@@ -128,16 +128,17 @@
 }
 
 .article-thumbnail {
-  height: 150px;
+  height: 250px;
 }
 
-.article-p {
-  font: 15px sans-serif;
+.article-summary {
+  font-size: 0.875rem;
+  color: #949494;
+  font-family: sans-serif;
 }
 
 .article-card {
   cursor: pointer;
-  height: 330px;
 }
 
 .article-card:hover {
