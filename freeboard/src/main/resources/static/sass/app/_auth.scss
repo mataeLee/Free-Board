@@ -11,3 +11,17 @@
 .auth-btn:hover{
   color: #0a53be !important;
 }
+
+.nav-btn{
+  display: block;
+  padding: 0.5rem 1rem;
+  color: #ffe9f4;
+  text-decoration: none;
+  background-color: transparent;
+  border: 0;
+  transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out;
+}
+
+.nav-btn:hover{
+  color: #0a53be !important;
+}

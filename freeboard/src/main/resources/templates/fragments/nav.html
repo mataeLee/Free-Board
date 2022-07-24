@@ -2,7 +2,7 @@
     <div class="container px-md-5">
         <nav class="navbar">
             <a class="navbar-brand" th:href="@{/}">Promptech Free Board</a>
-            <a class="nav-link ms-auto" sec:authorize="isAuthenticated()" th:href="@{/articles/new}">글 쓰러 가기</a>
+            <button class="nav-btn ms-auto" sec:authorize="isAuthenticated()" onclick="openArticleNewFormModal()">글쓰러 가기</button>
             <a class="nav-link ms-auto" sec:authorize="isAnonymous()" th:href="@{/login}">로그인</a>
             <form class="form-inline" sec:authorize="isAuthenticated()" th:action="@{/logout}" method="post">
                 <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">

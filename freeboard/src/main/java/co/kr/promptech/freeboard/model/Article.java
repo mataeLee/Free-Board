@@ -26,7 +26,7 @@ public class Article {
     @Column(length = 5000)
     private String content;
 
-    @Column(length = 200)
+    @Column(length = 150)
     private String summary;
 
     @Column
@@ -51,10 +51,12 @@ public class Article {
     private List<Comment> comments;
 
     @Builder
-    public Article(Long id, String title, String content, int hit, Instant creationDate, Instant upateDate, Account user) {
+    public Article(Long id, String title, String content, String summary, String thumbnail, int hit, Instant creationDate, Instant upateDate, Account user) {
         this.id = id;
         this.title = title;
         this.content = content;
+        this.summary = summary;
+        this.thumbnail = thumbnail;
         this.hit = hit;
         this.creationDate = creationDate;
         this.upateDate = upateDate;

@@ -5,11 +5,10 @@
 <head th:replace="fragments/header :: header"></head>
 <body>
 <th:block th:replace="fragments/nav :: nav"></th:block>
+<div id="app-body"></div>
 <th:block layout:fragment="content"></th:block>
 <th:block th:replace="fragments/footer :: footer"></th:block>
-<!--Base scripts-->
 <th:block th:replace="fragments/scripts :: scripts"></th:block>
-<!--Page Script-->
 <th:block layout:fragment="script"></th:block>
 </body>
 </html>

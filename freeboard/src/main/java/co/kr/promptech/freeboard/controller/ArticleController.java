@@ -39,7 +39,6 @@ public class ArticleController {
     @GetMapping("/scroll")
     @ResponseBody
     public Map<String, Object> scroll(@PageableDefault(size = 9, page = 0, sort = "creationDate", direction = Sort.Direction.DESC) Pageable pageable){
-        logger.info("scroll size : " + pageable.getPageSize() + ", page : " + pageable.getPageNumber());
         Slice<Article> entities = articleService.findSliceBy(pageable);
         logger.info("content size : " + entities.getContent().size());
 
@@ -57,7 +56,7 @@ public class ArticleController {
     @PostMapping()
     public String post(@ModelAttribute("articleDetail") @Validated ArticleDetailDTO articleDetailDTO, BindingResult result, HttpSession httpSession, Principal principal) {
         if(result.hasErrors()){
-            return "app/articles/new";
+            return "app/articles/edit";
         }
         Account account = (Account) httpSession.getAttribute("account_" + principal.getName());
         articleService.save(articleDetailDTO, account);
@@ -83,23 +82,20 @@ public class ArticleController {
     @DeleteMapping("/{id}")
     public String delete(@PathVariable Long id) {
         articleService.delete(id);
-        return "redirect:/accounts/articles";
+        return "redirect:/articles";
     }
 
     @GetMapping("/{id}/edit")
     public String updateForm(@PathVariable Long id, Model model) {
         ArticleDetailDTO articleDetailDTO = articleService.findArticleDetailDTOById(id);
         model.addAttribute("articleDetail", articleDetailDTO);
-        return "app/articles/new";
+        return "app/articles/edit";
     }
 
-    @PutMapping()
-    public String update(@ModelAttribute("articleDetail") @Validated ArticleDetailDTO articleDetail, BindingResult result, HttpSession httpSession, Principal principal) {
-        if(result.hasErrors()){
-            return "app/articles/new";
-        }
+    @PutMapping("/{id}")
+    public String update( @PathVariable Long id, ArticleDetailDTO articleDetail, HttpSession httpSession, Principal principal) {
         Account account = (Account) httpSession.getAttribute("account_" + principal.getName());
         articleService.save(articleDetail, account);
-        return "redirect:/accounts/articles";
+        return "redirect:/articles";
     }
 }

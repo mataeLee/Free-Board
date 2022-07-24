@@ -34,6 +34,7 @@ public class ArticleService {
             article = Article.builder()
                     .content(articleDetail.getContent())
                     .title(articleDetail.getTitle())
+                    .summary(articleDetail.getSummary())
                     .user(account)
                     .build();
         } else {

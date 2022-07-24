@@ -10,10 +10,7 @@
                 <a class="nav-link">
                     최신순
                 </a>
-                <a class="nav-link">
-                    조회순
-                </a>
-                <select class="nav-link">
+                <select class="nav-link me-auto">
                     <option value="오늘">오늘</option>
                     <option value="오늘">이번 주</option>
                     <option value="오늘">이번 달</option>
@@ -22,9 +19,10 @@
             </nav>
             <div class="article-grid" id="article-grid">
                 <div class="card article-card m-md-2 shadow-lg" id="article-card" hidden>
+                    <div class="article-header">header</div>
                     <img class="article-thumbnail" id="article-thumbnail" src=""/>
                     <div class="card-body" id="article-body">
-                        <h6 id="article-title">제목</h6>
+                        <h4 id="article-title">제목</h4>
                         <p class="article-summary" id="article-summary">요약내용</p>
                     </div>
                     <div class="card-footer" id="article-footer">
@@ -36,72 +34,8 @@
     </div>
 </div>
 <th:block layout:fragment="script">
-    <script>
-        let articleTemplate = ""
-        let page = 0
-        let pageSize = 12
-        let hasNextArticles = true
-
-        window.onload = function (e){
-            appendArticlesAll(page)
-            articleTemplate = document.getElementById("article-card")
-            page++
-        }
-
-        window.onscroll = function (e) {
-            if(hasNextArticles) {
-                if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
-                    appendArticlesAll(page)
-                    page++
-                }
-            }
-        };
-
-        // create article
-        function createArticle(article){
-            const articleCard = articleTemplate.cloneNode(true)
-            articleCard.hidden = false
-            // article card onclick event listener
-            articleCard.onclick = () => {
-                location.href= window.location.pathname + '/' + article.id
-            }
-
-            // article card childs
-            const articleThumbnail = articleCard.querySelector("#article-thumbnail")
-            // articleThumbnail.src = '/profiles/thumbnail.jpeg'
-            articleThumbnail.src = article.thumbnail
-
-            const articleTitle = articleCard.querySelector("#article-title")
-            articleTitle.innerHTML = article.title
-
-            const articleSummary = articleCard.querySelector("#article-summary")
-            articleSummary.innerHTML = article.summary
-
-            return articleCard
-        }
-
-        function appendArticlesAll(page){
-            $.ajax({
-                type: "GET",
-                url: window.location.pathname + '/scroll',
-                dataType: "json",
-                data: {'page': page},
-                success: function (resultMap) {
-                    console.log('scroll req path: ' + window.location.pathname + ' success! page is: ' + page)
-                    const articleGrid = document.getElementById("article-grid")
-
-                    const articles = resultMap.articles
-                    for (let article of articles) {
-                        // article card init attributes
-                        const articleCard = createArticle(article)
-                        // article grid add article card
-                        articleGrid.appendChild(articleCard)
-                    }
-                    if(articles.length < pageSize) hasNextArticles = false
-                    else hasNextArticles = true
-                }
-            })
-        }
-    </script>
+    <script th:src="@{/js/app/home/scroll.js}"></script>
+    <script th:src="@{/js/app/articles/comment.js}"></script>
+    <script th:src="@{/js/app/articles/modal.js}"></script>
 </th:block>
 </html>
