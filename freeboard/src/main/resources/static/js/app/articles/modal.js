@@ -17,7 +17,7 @@ function openArticleEditFormModal(id) {
         url: '/articles/' + id + '/edit',
         dataType: 'html',
         success: function (form) {
-            $('#article-modal-show').modal('hide')
+            $('#article-show-modal').modal('hide')
             $('#app-body').empty()
             $('#app-body').append(form)
             $('#article-modal').modal('show')
@@ -33,7 +33,11 @@ function openArticleShowModal(id) {
         success: function (form) {
             $('#app-body').empty()
             $('#app-body').append(form)
-            $('#article-modal-show').modal('show')
+            $('#article-show-modal').modal('show').on(commentOnload(id))
         }
     })
+}
+
+function closeArticleShowModal(){
+    $('#article-show-modal').modal('hide')
 }

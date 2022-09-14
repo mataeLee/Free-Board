@@ -33,7 +33,6 @@ public class ArticleFormatter {
                     .userprofile(article.getUser().getProfileImage())
                     .hit(article.getHit())
                     .summary(article.getSummary())
-                    .comments(CommentFormatter.toDTOList(article.getComments()))
                     .creationDate(InstantFormatter.formatString(article.getCreationDate()))
                     .updateDate(InstantFormatter.formatString(article.getUpateDate()))
                     .build();

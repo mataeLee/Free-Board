@@ -1,6 +1,8 @@
 package co.kr.promptech.freeboard.util;
 
 import co.kr.promptech.freeboard.dto.CommentDTO;
+import co.kr.promptech.freeboard.model.Account;
+import co.kr.promptech.freeboard.model.Article;
 import co.kr.promptech.freeboard.model.Comment;
 
 import java.util.ArrayList;
@@ -13,7 +15,6 @@ public class CommentFormatter {
                 .id(comment.getId())
                 .username(comment.getUser().getUsername())
                 .userprofile(comment.getUser().getProfileImage())
-                .articleId(comment.getArticle().getId())
                 .content(comment.getContent())
                 .creationDate(InstantFormatter.formatString(comment.getCreationDate()))
                 .build();
@@ -25,5 +26,13 @@ public class CommentFormatter {
             commentDTOList.add(toDTO(comment));
         }
         return commentDTOList;
+    }
+
+    public static Comment toEntity(CommentDTO commentDTO, Account account, Article article) {
+        return Comment.builder()
+                .content(commentDTO.getContent())
+                .user(account)
+                .article(article)
+                .build();
     }
 }

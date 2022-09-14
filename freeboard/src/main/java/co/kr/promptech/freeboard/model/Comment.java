@@ -33,7 +33,7 @@ public class Comment {
     @ColumnDefault("0")
     private Account user;
 
-    @ManyToOne()
+    @ManyToOne(targetEntity = Article.class, fetch = FetchType.LAZY)
     @JoinColumn(name = "article_id")
     private Article article;
 

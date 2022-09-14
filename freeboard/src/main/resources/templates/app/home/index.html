@@ -6,28 +6,37 @@
 <div layout:fragment="content">
     <div class="container px-md-5">
         <div class="py-md-5">
-            <nav class="navbar mb-2 mx-md-2">
-                <a class="nav-link">
-                    최신순
-                </a>
-                <select class="nav-link me-auto">
-                    <option value="오늘">오늘</option>
-                    <option value="오늘">이번 주</option>
-                    <option value="오늘">이번 달</option>
-                    <option value="오늘">올해</option>
-                </select>
-            </nav>
+<!--            <nav class="navbar mb-2 mx-md-2">-->
+<!--                <a class="nav-link">-->
+<!--                    최신순-->
+<!--                </a>-->
+<!--                <select class="nav-link me-auto">-->
+<!--                    <option value="오늘">오늘</option>-->
+<!--                    <option value="오늘">이번 주</option>-->
+<!--                    <option value="오늘">이번 달</option>-->
+<!--                    <option value="오늘">올해</option>-->
+<!--                </select>-->
+<!--            </nav>-->
             <div class="article-grid" id="article-grid">
                 <div class="card article-card m-md-2 shadow-lg" id="article-card" hidden>
-                    <div class="article-header">header</div>
-                    <img class="article-thumbnail" id="article-thumbnail" src=""/>
-                    <div class="card-body" id="article-body">
-                        <h4 id="article-title">제목</h4>
-                        <p class="article-summary" id="article-summary">요약내용</p>
+                    <div class="article-card header">
+                        <div class="row" style="width: 100%; margin: 0">
+                            <img class="article-card profile-img rounded-circle col-2" id="article-profile-img"/>
+                            <div class="col-8">
+                                <b><span class="article-card profile-name" id="article-profile-name"></span></b></div>
+                        </div>
+                        <div class="col-2 article-card-header dropbox">
+
+                        </div>
                     </div>
-                    <div class="card-footer" id="article-footer">
-                        footer
+                    <img class="article-card thumbnail" id="article-thumbnail" src=""/>
+                    <div class="card-body article-card body" id="article-body">
+                        <h4 id="article-title"><b>제목</b></h4>
+                        <p class="article-card summary" id="article-summary">요약내용</p>
                     </div>
+<!--                    <div class="card-footer" id="article-footer">-->
+<!--                        footer-->
+<!--                    </div>-->
                 </div>
             </div>
         </div>

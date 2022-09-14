@@ -2,7 +2,6 @@ package co.kr.promptech.freeboard.repository;
 
 import co.kr.promptech.freeboard.model.Account;
 import co.kr.promptech.freeboard.model.Article;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 import org.springframework.data.jpa.repository.EntityGraph;
@@ -30,7 +29,7 @@ public interface ArticleRepository extends JpaRepository<Article, Long> {
 
     List<Article> findAllByUserOrderByCreationDateDesc(Account account);
 
-    @EntityGraph(attributePaths = {"comments", "user"})
+    @EntityGraph(attributePaths = {"user"})
     Optional<Article> findById(Long id);
 
     @EntityGraph(attributePaths = {"user"})

@@ -48,62 +48,6 @@ public class ArticleService {
         articleRepository.addHitByArticleId(articleId);
     }
 
-    public Page<ArticleSummaryDTO> findNewsByPaginated(Pageable pageable) {
-        int pageSize = pageable.getPageSize();
-        int currentPage = pageable.getPageNumber();
-        int startItem = currentPage * pageSize;
-
-        Instant before = Instant.now().minus(1, ChronoUnit.DAYS);
-        Instant after = Instant.now();
-        List<Article> articles = articleRepository.findAllByCreationDateBetweenOrderByHitDescCreationDateDesc(before, after);
-        List<Article> list;
-
-        if(articles.size() < startItem){
-            list = articles;
-        }
-        else{
-            int toIndex = Math.min(startItem + pageSize, articles.size());
-            list = articles.subList(startItem, toIndex);
-        }
-
-        List<ArticleSummaryDTO> res = new ArrayList<>();
-        for (int i=0; i<list.size(); i++){
-            ArticleSummaryDTO dto = ArticleFormatter.toSummaryDTO(list.get(i));
-            dto.setNum(i+1);
-            res.add(dto);
-        }
-
-        Page<ArticleSummaryDTO> articlePage = new PageImpl<>(res, PageRequest.of(currentPage, pageSize), articles.size());
-        return articlePage;
-    }
-
-    public Page<ArticleSummaryDTO> findAllByPaginated(Pageable pageable) {
-        int pageSize = pageable.getPageSize();
-        int currentPage = pageable.getPageNumber();
-        int startItem = currentPage * pageSize;
-        List<Article> articles = articleRepository.findAllByOrderByCreationDateDesc();
-        List<Article> list;
-
-        if(articles.size() < startItem){
-            list = articles;
-        }
-        else{
-            int toIndex = Math.min(startItem + pageSize, articles.size());
-            list = articles.subList(startItem, toIndex);
-
-        }
-
-        List<ArticleSummaryDTO> res = new ArrayList<>();
-        for (int i=0; i<list.size(); i++){
-            ArticleSummaryDTO dto = ArticleFormatter.toSummaryDTO(list.get(i));
-            dto.setNum(i+1);
-            res.add(dto);
-        }
-
-        Page<ArticleSummaryDTO> articlePage = new PageImpl<>(res, PageRequest.of(currentPage, pageSize), articles.size());
-        return articlePage;
-    }
-
     public Page<ArticleSummaryDTO> findAllByAccountByPaginated(Account account, Pageable pageable) {
         int pageSize = pageable.getPageSize();
         int currentPage = pageable.getPageNumber();

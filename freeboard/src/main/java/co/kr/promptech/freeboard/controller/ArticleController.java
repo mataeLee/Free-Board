@@ -59,6 +59,7 @@ public class ArticleController {
             return "app/articles/edit";
         }
         Account account = (Account) httpSession.getAttribute("account_" + principal.getName());
+
         articleService.save(articleDetailDTO, account);
         return "redirect:/articles";
     }
@@ -71,8 +72,6 @@ public class ArticleController {
 
     @GetMapping("/{id}")
     public String show(@PathVariable("id") Long id, Model model) {
-        //TODO spring cache 이용하여 조회수 조절
-        articleService.addHit(id);
         ArticleDetailDTO articleDetailDTO = articleService.findArticleDetailDTOById(id);
         model.addAttribute("articleDetail", articleDetailDTO);
         model.addAttribute("comment", new CommentDTO());

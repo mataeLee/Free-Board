@@ -22,8 +22,7 @@ $(document).ready(function () {
             ['style', ['bold', 'italic', 'underline', 'clear']],
             ['color', ['color']],
             ['para', ['paragraph']],
-            ['insert', ['picture', 'link', 'video']],
-            ['view', ['codeview']]
+            // ['view', ['codeview']]
         ],
         fontNames: ['Arial', 'Arial Black', 'Comic Sans MS', 'Courier New', 'Helvetica neue', 'Helvetica', 'Impact', 'Lucida Grande', 'Tahoma', 'Times New Roman', 'Verdana', 'Tahoma', 'Courier New', '맑은 고딕', '굴림', '돋움'],
         fontNamesIgnoreCheck: ['Arial', 'Arial Black', 'Comic Sans MS', 'Courier New', 'Helvetica neue', 'Helvetica', 'Impact', 'Lucida Grande', 'Tahoma', 'Times New Roman', 'Verdana', 'Tahoma', 'Courier New', '맑은 고딕', '굴림', '돋움'],

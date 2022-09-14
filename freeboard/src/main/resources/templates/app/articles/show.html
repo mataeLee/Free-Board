@@ -1,17 +1,18 @@
-<div class="modal fade" id="article-modal-show" tabindex="1">
-    <button style="display: inline; color: aliceblue" type="button" class="btn-close ms-auto" data-bs-dismiss="modal" aria-label="Close"></button>
+<div class="modal fade" id="article-show-modal" tabindex="1">
+    <button class="btn-close" type="button" data-bs-dismiss="modal"
+            aria-label="Close"><img class="modal-close-btn" src="/img/close.jpeg" /></button>
     <div class="modal-dialog article-dialog">
         <div class="row article-box">
-            <div class="modal-content article-img col">
+            <div class="modal-content article-box img-content col">
                 <img src="/profiles/thumbnail.jpeg">
             </div>
-            <div class="modal-content article-content col">
+            <div class="modal-content article-box content col">
                 <div class="modal-header">
-                    <div class="article-element-left"><span th:text="${articleDetail.username}"></span></div>
-                    <div class="article-element-right">작성일 : <span
+                    <div><span th:text="${articleDetail.username}"></span></div>
+                    <div>작성일 : <span
                             th:text="${articleDetail.creationDate}"></span></div>
-                    <div class="article-element-right">마지막 수정일 : <span
-                            th:text="${articleDetail.updateDate}"></span>
+                    <div>마지막 수정일 :
+                        <span th:text="${articleDetail.updateDate}"></span>
                     </div>
                     <a class="nav-link ms-auto">
                         <form
@@ -26,36 +27,40 @@
                             th:onclick="openArticleEditFormModal('[[${articleDetail.id}]]')">수정
                     </button>
                 </div>
-                <div class="modal-body article-content-box">
+                <div class="modal-body article-box content scrollable">
                     <!--                    <b><span th:text="${articleDetail.title}"></span></b>-->
-                    <div class="article-p my-2" th:utext="${articleDetail.content}"></div>
-                    <div class="container comment">
-                        <div class="comment-box row my-2" th:each="comment : ${articleDetail.comments}">
-                            <img class="rounded-circle col-2 comment-profile-img" style="display: inline-block" src="/profiles/thumbnail.jpeg"/>
-                            <div class="col-11">
-                                <div><span th:text="${comment.username}"></span></div>
-                                <span th:text="${comment.content}"></span>
-                                <form class="comment-element-right"
-                                      th:if="${#authentication.getName()} == ${comment.username}"
-                                      th:action="@{/comments/{id}/{articleId} (id=${comment.id}, articleId=${articleDetail.id})}"
-                                      th:method="delete">
-                                    <input type="hidden" name="_method" value="delete">
-                                    <button type="submit" class="manage-btn">삭제
-                                    </button>
-                                </form>
+                    <div class="article-box content p my-2" th:utext="${articleDetail.content}"></div>
+                    <div class="container comment-container mt-1" id="comment-container">
+                        <div class="row comment wd-100 my-4" id="comment-box" hidden>
+                            <img class="comment profile-img rounded-circle col-2" id="comment-profile-img"/>
+                            <div class="comment profile-name col-10">
+                                <div><b><span id="comment-profile-name"></span></b></div>
+                                <span class="comment content" id="comment-content"></span>
+<!--                                <form-->
+<!--                                        th:if="${#authentication.getName()} == ${comment.username}"-->
+<!--                                        th:action="@{/comments/{id}/{articleId} (id=${comment.id}, articleId=${articleDetail.id})}"-->
+<!--                                        th:method="delete">-->
+<!--                                    <input type="hidden" name="_method" value="delete">-->
+<!--                                    <button type="submit" class="manage-btn">삭제-->
+<!--                                    </button>-->
+<!--                                </form>-->
                             </div>
                         </div>
                     </div>
+                    <div class="comment-more-box mb-3" id="comment-more">
+                        <button style="background-color: transparent; border: 0; margin: 0; padding: 0;" type="button" th:onclick="getComments('[[${articleDetail.id}]]')">
+                            <img style="width: 24px; height: 24px;" src="/img/more_btn.png">
+                        </button>
+                    </div>
                 </div>
                 <div class="modal-footer">
-                    <form style="width: 100%" th:action="@{/comments/{articleId} (articleId = ${articleDetail.id})}"
+                    <form style="width: 100%" id="form-comment"
                           th:method="post"
                           th:object="${comment}">
-                        <div class="input-group">
-                            <input class="form-control" maxlength="100" id="content" type="text" name="content"
+                        <div class="input-group" th:object="${comment}">
+                            <input class="form-control" maxlength="100" id="input-comment-content" type="text" name="content"
                                    placeholder="댓글을 남겨주세요 (최대 100자)" th:field="*{content}" required>
-                            <button class="btn btn-primary" type="submit"
-                                    th:onclick="postComment('[[${comment}]]', '[[${article.id}]]')">등록
+                            <button class="btn btn-primary" type="button" th:onclick="postComment('[[${articleDetail.id}]]')">등록
                             </button>
                         </div>
                     </form>
@@ -64,3 +69,5 @@
         </div>
     </div>
 </div>
+<script th:src="@{/js/app/articles/comment.js}"></script>
+<script th:src="@{/js/app/articles/modal.js}"></script>

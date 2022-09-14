@@ -1,14 +1,11 @@
 package co.kr.promptech.freeboard.service;
 
-import co.kr.promptech.freeboard.dto.ArticleSummaryDTO;
 import co.kr.promptech.freeboard.dto.CommentDTO;
 import co.kr.promptech.freeboard.model.Account;
 import co.kr.promptech.freeboard.model.Article;
 import co.kr.promptech.freeboard.model.Comment;
 import co.kr.promptech.freeboard.repository.CommentRepository;
-import co.kr.promptech.freeboard.util.ArticleFormatter;
 import co.kr.promptech.freeboard.util.CommentFormatter;
-import co.kr.promptech.freeboard.util.InstantFormatter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -25,20 +22,8 @@ import java.util.Objects;
 public class CommentService {
     private final CommentRepository commentRepository;
 
-    public void save(CommentDTO commentDTO, Account account, Article article) {
-        Comment comment = null;
-        if(commentDTO.getId() != null) comment = commentRepository.findById(commentDTO.getId()).orElse(null);
-        if(Objects.isNull(comment)) {
-            comment = Comment.builder()
-                    .content(commentDTO.getContent())
-                    .user(account)
-                    .article(article)
-                    .build();
-        }
-        else{
-            comment.setContent(commentDTO.getContent());
-        }
-        commentRepository.save(comment);
+    public Comment save(Comment comment) {
+        return commentRepository.save(comment);
     }
 
 
@@ -90,5 +75,9 @@ public class CommentService {
 
         Page<CommentDTO> articlePage = new PageImpl<>(res, PageRequest.of(currentPage, pageSize), comments.size());
         return articlePage;
+    }
+
+    public Page<Comment> findPageByArticleId(Long articleId, Pageable pageable) {
+        return commentRepository.findPageByArticleId(articleId, pageable);
     }
 }

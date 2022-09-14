@@ -1,19 +1,19 @@
-let articleTemplate = ""
-let page = 0
-let pageSize = 9
+let articleTemplate
+let articlesPage = 0
+let articlesPageSize = 9
 let hasNextArticles = true
 
 window.onload = function (e) {
-    appendArticlesAll(page)
+    appendArticlesByPage(articlesPage)
     articleTemplate = document.getElementById("article-card")
-    page++
+    articlesPage++
 }
 
 window.onscroll = function (e) {
     if ((window.innerHeight + window.scrollY) >= document.getElementById("article-grid").offsetHeight) {
         if (hasNextArticles) {
-            appendArticlesAll(page)
-            page++
+            appendArticlesByPage(articlesPage)
+            articlesPage++
         } else
             console.log("no more contents")
     }
@@ -27,9 +27,12 @@ function createArticle(article) {
     articleCard.onclick = () => {
         openArticleShowModal(article.id)
     }
-    // articleCard.onclick = () => {
-    //     location.href = window.location.pathname + '/' + article.id
-    // }
+
+    const articleProfileImg = articleCard.querySelector('#article-profile-img')
+    articleProfileImg.src = '/profiles/thumbnail.jpeg'
+
+    const articleProfileName = articleCard.querySelector('#article-profile-name')
+    articleProfileName.innerHTML = article.username
 
     // article card childs
     const articleThumbnail = articleCard.querySelector("#article-thumbnail")
@@ -45,7 +48,7 @@ function createArticle(article) {
     return articleCard
 }
 
-function appendArticlesAll(page) {
+function appendArticlesByPage(page) {
     $.ajax({
         type: "GET",
         url: window.location.pathname + '/scroll',
@@ -62,7 +65,13 @@ function appendArticlesAll(page) {
                 // article grid add article card
                 articleGrid.appendChild(articleCard)
             }
-            if (articles.length < pageSize) hasNextArticles = false
+            /*
+                if (articles.length < articlesPageSize) {
+                    hasNextArticles = false
+                }
+            */
+            hasNextArticles = !(articles.length < articlesPageSize)
+
         }
     })
 }

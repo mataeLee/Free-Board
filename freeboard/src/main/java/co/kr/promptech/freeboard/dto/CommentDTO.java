@@ -17,15 +17,15 @@ public class CommentDTO {
     private String creationDate;
 
     private String username;
+
     private String userprofile;
-    private Long articleId;
+
     @Builder
-    public CommentDTO(Long id, String content, String creationDate, String username, String userprofile, Long articleId) {
+    public CommentDTO(Long id, String content, String creationDate, String username, String userprofile) {
         this.id = id;
         this.content = content;
         this.creationDate = creationDate;
         this.username = username;
         this.userprofile = userprofile;
-        this.articleId = articleId;
     }
 }

@@ -1,89 +1,5 @@
-.cbox {
-  width: 100%;
-  height: 100%;
-  padding-left: 225px;
-  padding-top: 44px;
-  top: 56px;
-}
-
-.btn-primary {
-  color: #ffe9f4 !important;
-  background-color: #1a1e21 !important;
-  border-color: #ffe9f4 !important;
-  border-width: 3px !important;
-}
-
-.dataTable-pagination a {
-  color: #ffe9f4 !important;
-  background-color: #1a1e21 !important;
-  border-color: #ffe9f4 !important;
-  border-width: 3px !important;
-}
-
-.card-header {
-  background-color: #ffe9f4 !important;
-}
-
-.card-footer {
-  background-color: #ffe9f4 !important;
-}
-
-
-.comment{
-  display: block;
-}
-
-.comment-box {
-  position: relative;
-  background-clip: border-box;
-  align-items: stretch;
-}
-
-.comment-profile-img {
-  padding: 0;
-}
-
-.comment-header > div:first-child,
-.comment-header > img:first-child {
-  float: left !important;
-}
-
-.comment-body {
-  padding: 0.5rem 1rem;
-  margin-bottom: 0;
-}
-
-.article-header {
-  padding: 0.5rem 1rem;
-  margin-bottom: 0;
-  background-color: rgba(0, 0, 0, 0.03);
-  font-size: small !important;
-  height: 60px !important;
-}
-
-.article-element-right {
-  float: right;
-  display: inline;
-}
-
-.article-element-left {
-  float: left;
-  display: inline;
-}
-
-.article-header > div:first-child,
-.article-header > img:first-child {
-  float: left !important;
-}
-
-.article-body {
-  padding: 0.5rem 1rem;
-  margin-bottom: 0;
-}
-
-.article-profile-img {
-  width: 32px !important;
-  height: 32px !important;
+.article-nav {
+  height: 50px;
 }
 
 .article-grid {
@@ -93,30 +9,66 @@
   align-items: stretch;
 }
 
-.article-nav {
-  height: 50px;
-}
-
-.article-thumbnail {
-  min-height: 300px;
-  min-width: 300px;
-}
-
-.article-summary {
-  font-size: 0.875rem;
-  color: #949494;
-  font-family: sans-serif;
-}
-
-.article-card {
-  cursor: pointer;
+.aritlce-submmit {
+  float: right;
+  border: 0 !important;
+  background-color: #ffe9f4;
+  color: #1a1e21;
 }
 
 .article-card:hover {
   border-color: #0a53be;
 }
 
-.article-dialog{
+.article-card {
+  .header {
+    padding: 0.5rem 1rem;
+    margin-bottom: 0;
+    height: 60px !important;
+  }
+
+  .profile-img {
+    cursor: pointer;
+    width: 42px;
+    height: 42px;
+    border: 0;
+    padding: 0;
+  }
+
+  .profile-name {
+    cursor: pointer;
+  }
+
+  .dropbox {
+    cursor: pointer;
+  }
+
+  .body {
+    cursor: pointer;
+    padding: 0.5rem 1rem;
+    margin-bottom: 0;
+  }
+
+  .thumbnail {
+    cursor: pointer;
+    min-height: 300px;
+    min-width: 300px;
+  }
+
+  .summary {
+    font-size: 0.875rem;
+    color: #949494;
+    font-family: sans-serif;
+  }
+}
+
+.modal-close-btn {
+  width: 42px;
+  height: 42px;
+  background-color: transparent;
+}
+
+.article-dialog {
   width: 80vw;
   height: 87vh;
   margin: 5vh 10vw !important;
@@ -125,37 +77,92 @@
   max-height: 100%;
 }
 
-.article-content{
-  border: 0 !important;
-  border-radius: 0 4px 4px 0;
-  max-height: 100%;
-}
-
-.article-img{
-  margin: 0;
-  padding: 0;
-  border-radius: 4px 0 0 4px;
-  background: #1a1e21;
-}
-
-.article-content-box{
-  overflow-y: scroll;
-}
-
-.article-p{
-
-}
-
-.article-box{
+.article-box {
   width: 100%;
   height: 100%;
+  border: 0;
+  margin: 0;
+  padding: 0;
+
+  .img-box {
+    background-color: #949494;
+    width: 600px !important;
+    height: 600px !important;
+  }
+
+  .img-upload {
+    color: #1a1e21;
+  }
+
+  .canvas{
+    width: 600px;
+    height: 600px;
+  }
+
+  .content {
+    .img {
+      background: transparent;
+    }
+
+    .main {
+      border-radius: 0 4px 4px 0 !important;
+      max-height: 100%;
+    }
+
+    .scrollable {
+      overflow-y: scroll;
+    }
+
+    .p {
+      padding: 0 1rem !important;
+      height: 20%;
+      font-size: 0.95rem;
+      color: #424949;
+      font-family: sans-serif;
+    }
+  }
 }
 
-.profile{
-  display: inline-block;
+.comment-container {
+  padding: 0 1rem !important;
 }
 
-.comment-box > img{
-  max-width: 42px;
-  max-height: 42px;
+.comment-more-box{
+  display: flex;
+  justify-content: center;
+}
+
+.comment {
+  padding: 0;
+  margin: 0;
+
+  .wd-100 {
+    width: 100%;
+  }
+
+  .profile-img {
+    cursor: pointer;
+    max-width: 42px !important;
+    max-height: 42px !important;
+    padding: 0 !important;
+  }
+
+  .profile-name {
+    cursor: pointer;
+    padding: 0 1rem !important;
+  }
+
+  .content {
+    font-size: 0.95rem;
+    color: #424949;
+    font-family: sans-serif;
+  }
+}
+
+.comment-box {
+  //
+  //.body{
+  //  padding: 0.5rem 1rem;
+  //  margin-bottom: 0;
+  //}
 }

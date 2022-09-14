@@ -1,0 +1,33 @@
+<div class="modal fade" id="article-modal" tabindex="1">
+    <div class="modal-dialog article-dialog modal-lg modal-dialog-centered mt-md-5">
+        <div class="modal-content">
+            <div class="modal-header">게시물 수정</span>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form th:action="@{/articles/{id} (id= ${articleDetail.id})}" th:method="put" th:object="${articleDetail}">
+                <input type="hidden" name="_method" value="put">
+                <div class="modal-body">
+                    <div class="form-floating mb-3">
+                        <input class="form-control" id="title" th:field="*{title}" maxlength="100" type="text"
+                               name="title" placeholder="title" required/>
+                        <label for="title">제목을 입력하세요</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input class="form-control" id="summary" th:field="*{summary}" maxlength="150" type="text"
+                               name="summary" placeholder="summary" required/>
+                        <label for="summary">글에 대해 간단하게 소개해주세요</label>
+                    </div>
+                    <textarea class="form-floating" id="summernote" th:field="*{content}"
+                              th:text="${articleDetail.getContent()}" type="text" name="content" rows="10"
+                              maxlength="8000"></textarea>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-primary mt-3" type="submit">완료</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
+<script th:src="@{/js/ext/summernote-lite-ko-KR.js}"></script>

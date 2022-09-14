@@ -47,9 +47,6 @@ public class Article {
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Account user;
 
-    @OneToMany(mappedBy = "article", targetEntity = Comment.class, fetch = FetchType.LAZY, orphanRemoval = true)
-    private List<Comment> comments;
-
     @Builder
     public Article(Long id, String title, String content, String summary, String thumbnail, int hit, Instant creationDate, Instant upateDate, Account user) {
         this.id = id;
